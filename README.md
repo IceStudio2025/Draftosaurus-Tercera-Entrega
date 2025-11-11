@@ -52,7 +52,7 @@ git clone https://github.com/IceStudio2025/Draftosaurus-Tercera-Entrega.git
 
 ### ✅ Paso 2 – Abrir el proyecto en Visual Studio Code
 
-Mover la carpeta hacia el VScode
+Mover la carpeta de "ProyectoFinalTercero" hacia el VScode
 
 ---
 
