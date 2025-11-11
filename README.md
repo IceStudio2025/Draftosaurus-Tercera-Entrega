@@ -14,10 +14,6 @@ Una aplicación interactiva desarrollada por IceStudio, utilizando **HTML, CSS, 
 
 Este trabajo corresponde a la entrega final de **IceStudio – 3ºMA**.
 
-El objetivo es virtualizar el juego Draftosaurus en formato de página web, construido como una **Single-Page Application**, para ofrecer una experiencia rápida, fluida y sin recargas constantes.
-Una vez cargada la estructura principal, únicamente se intercambian pequeños datos con el servidor (como qué dinosaurio seleccionó el jugador o el resultado del dado).
-Esto permite animaciones, transiciones y una jugabilidad tipo aplicación móvil o de escritorio.
-
 ---
 
 ### 👥 **Integrantes IceStudio**
