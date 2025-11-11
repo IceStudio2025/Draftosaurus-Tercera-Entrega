@@ -1,12 +1,9 @@
-Acá tenés **toda la descripción adaptada a tu empresa IceStudio**, con los nombres reales, los comandos correctos de XAMPP y la explicación de la SQL, más los links oficiales pedidos.
-Lo dejé con tono profesional pero entendible.
 
 ---
 
 ## ✅ **Draftosaurus – Proyecto Web presentado por IceStudio (3MA)**
 
-
-https://github.com/IceStudio2025/Draftosaurus-Tercera-Entrega/blob/01c7e0db2deb7ecfa318a6f5b18cc30c6048e105/ProyectoFinalTercero/frontend/img/icestudio.png
+![Image Alt](https://github.com/IceStudio2025/Draftosaurus-Tercera-Entrega/blob/01c7e0db2deb7ecfa318a6f5b18cc30c6048e105/ProyectoFinalTercero/frontend/img/icestudio.png?raw=true)
 
 ¡Bienvenido a Draftosaurus Web!
 Una aplicación interactiva desarrollada por IceStudio, utilizando **HTML, CSS, JavaScript, PHP y MySQL**.
