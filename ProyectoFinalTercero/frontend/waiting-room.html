@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draftosaurus - Sala de Espera</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./styles/global-settings.css">
+    <link rel="stylesheet" href="./styles/waiting-room.css">
+    <link rel="icon" href="./img/icestudio.png">
+    <link rel="stylesheet" href="./styles/musica.css">
+    <link rel="stylesheet" href="./styles/icebot.css">
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <nav class="navbar-custom">
+        <a class="navbar-brand" href="./menujugador.html">
+            <img src="./img/inicio.png" alt="Draftosaurus">
+        </a>
+        <div class="nav-links">
+            <a class="nav-link" href="./homepage.html"><i class="fas fa-home"></i> IceStudio</a>
+            <a class="nav-link" href="./configuracion.html"><i class="fas fa-cog"></i> Ajustes</a>
+            <div class="user-dropdown">
+                <button class="user-button" id="nombre-usuario">
+                    <i class="fas fa-user-circle"></i> <span>Usuario</span>
+                </button>
+                <div class="dropdown-menu-custom" id="userDropdown">
+                    <div class="dropdown-item-custom" id="btn-logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Contenedor principal -->
+    <div class="container">
+        <div class="waiting-room-wrapper">
+            <div class="header-logo">
+                <img src="./img/Logo.png" alt="Draftosaurus" class="logo-image">
+            </div>
+            <div class="card main-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-dragon"></i> Configurar Partida</h3>
+                    <p class="subtitle">Prepara tu sala y espera a los jugadores</p>
+                </div>
+                
+                <!-- Formulario de configuración -->
+                <div class="card-body">
+                    <div id="config-form" class="config-section">
+                        <div class="form-group">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <label for="roomCode" class="form-label" style="margin: 0;">
+                                    <i class="fas fa-key"></i> Código de Sala
+                                </label>
+                                <button type="button" id="regenerateCodeBtn" class="btn-regenerate" title="Generar nuevo código">
+                                    <i class="fas fa-sync-alt"></i> Regenerar
+                                </button>
+                            </div>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                id="roomCode" 
+                                maxlength="10" 
+                                placeholder="Ejemplo: DINO2025"
+                                required>
+                            <small class="form-hint">
+                                <i class="fas fa-info-circle"></i> 
+                                Entre 4 y 10 caracteres alfanuméricos
+                            </small>
+                            <div class="validation-message invalid">
+                                El código debe tener entre 4-10 caracteres alfanuméricos
+                            </div>
+                            <div class="validation-message valid">
+                                ¡Código válido!
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="playerCount" class="form-label">
+                                <i class="fas fa-users"></i> Número de Jugadores
+                            </label>
+                            <select class="form-control" id="playerCount" required>
+                                <option value="">Selecciona...</option>
+                                <option value="2">2 Jugadores</option>
+                                <option value="3">3 Jugadores</option>
+                                <option value="4">4 Jugadores</option>
+                                <option value="5">5 Jugadores</option>
+                            </select>
+                            <small class="form-hint">
+                                <i class="fas fa-info-circle"></i> 
+                                Mínimo 2, máximo 5 jugadores
+                            </small>
+                        </div>
+                        <div class="form-group">
+                            <label for="gameDirection" class="form-label">
+                                <i class="fas fa-sync-alt"></i> Sentido del Juego
+                            </label>
+                            <select class="form-control" id="gameDirection" required>
+                                <option value="">Selecciona...</option>
+                                <option value="clockwise">Horario ➡️</option>
+                                <option value="counterclockwise">Antihorario ⬅️</option>
+                            </select>
+                            <small class="form-hint">
+                                <i class="fas fa-info-circle"></i> 
+                                Define cómo rotarán los turnos
+                            </small>
+                        </div>
+                        <div class="form-group">
+                            <label for="boardType" class="form-label">
+                                <i class="fas fa-map"></i> Tablero / Estación
+                            </label>
+                            <select class="form-control" id="boardType" required>
+                                <option value="">Selecciona...</option>
+                                <option value="primavera" selected>🌸 Primavera</option>
+                                <option value="verano">☀️ Verano</option>
+                            </select>
+                            <small class="form-hint">
+                                <i class="fas fa-info-circle"></i> 
+                                Elige la estación del tablero
+                            </small>
+                        </div>
+                        <button 
+                            type="button" 
+                            class="btn btn-primary btn-block" 
+                            id="createRoomBtn"
+                            disabled>
+                            <i class="fas fa-plus-circle"></i> Crear Sala
+                        </button>
+                        <button 
+                            type="button" 
+                            class="btn btn-info btn-block" 
+                            id="addTestingPlayersBtn"
+                            style="margin-top: 10px; display: none;">
+                            <i class="fas fa-users-cog"></i> Añadir Jugadores de Testing
+                        </button>
+                    </div>
+                    
+                    <!-- Información de la sala -->
+                    <div id="room-info" class="room-info-section" style="display: none;">
+                        <div class="room-code-display">
+                            <div class="code-label">Código de Sala:</div>
+                            <div class="code-value" id="displayRoomCode">DINO123</div>
+                            <button class="btn-copy" id="copyCodeBtn" title="Copiar código">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="room-settings">
+                            <div class="setting-item">
+                                <i class="fas fa-users"></i>
+                                <span id="displayMaxPlayers">5</span> jugadores máx.
+                            </div>
+                            <div class="setting-item">
+                                <i class="fas fa-sync-alt"></i>
+                                <span id="displayDirection">Horario</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Lista de jugadores -->
+                    <div id="playersSection" class="players-section" style="display: none;">
+                        <div class="players-header">
+                            <h5><i class="fas fa-users"></i> Jugadores en Sala</h5>
+                            <span class="badge" id="playerCountBadge">0/5</span>
+                        </div>
+                        <div class="players-list-container">
+                            <ul class="players-list" id="playersList">
+                            </ul>
+                        </div>
+                        <div class="first-player-info" id="firstPlayerInfo" style="display: none;">
+                            <i class="fas fa-trophy"></i>
+                            <span>
+                                <strong id="firstPlayerName">-</strong> comenzará la partida
+                                <small>(menor edad)</small>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <!-- Botones de acción -->
+                    <div class="action-buttons">
+                        <button 
+                            type="button" 
+                            class="btn btn-success btn-block" 
+                            id="startGameBtn"
+                            style="display: none;"
+                            disabled>
+                            <i class="fas fa-play"></i> Iniciar Partida
+                        </button>
+                        <div class="button-row">
+                            <button 
+                                type="button" 
+                                class="btn btn-danger" 
+                                id="leaveRoomBtn"
+                                style="display: none;">
+                                <i class="fas fa-door-open"></i> Abandonar
+                            </button>
+                            <button 
+                                type="button" 
+                                class="btn btn-secondary" 
+                                id="backBtn">
+                                <i class="fas fa-arrow-left"></i> Volver
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Alertas de estado -->
+            <div id="statusAlert" class="status-alert" style="display: none;">
+                <i class="fas fa-info-circle"></i>
+                <span id="statusText">Mensaje del sistema</span>
+            </div>
+            
+            <!-- Guía rápida -->
+            <div class="info-card">
+                <h6><i class="fas fa-lightbulb"></i> Guía Rápida</h6>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-key"></i></div>
+                        <div class="info-content">
+                            <strong>Código único</strong>
+                            <p>4-10 caracteres para tu sala</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-users"></i></div>
+                        <div class="info-content">
+                            <strong>2-5 jugadores</strong>
+                            <p>Mínimo 2 para comenzar</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-crown"></i></div>
+                        <div class="info-content">
+                            <strong>Eres el Admin</strong>
+                            <p>Controlas el inicio del juego</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Pie de página -->
+    <footer class="game-footer">
+        <div class="footer-content">
+            <div>
+                <p class="footer-text">© 2025 Draftosaurus Digital | Todos los derechos reservados a IceStudio.</p>
+            </div>
+            <div class="social-links">
+                <a href="https://discord.com/invite/j23At8xnv6"><i class="fab fa-discord"></i></a>
+                <a href="https://x.com/icestudio2025"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/icestudiooficial/"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@ICESTUDIO_2025"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        const userButton = document.getElementById('nombre-usuario');
+        const dropdown = document.getElementById('userDropdown');
+        if (userButton && dropdown) {
+            userButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                dropdown.classList.toggle('active');
+            });
+            document.addEventListener('click', function(e) {
+                if (!userButton.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.remove('active');
+                }
+            });
+        }
+    </script>
+    <script src="./js/api-config.js" type="module"></script>
+    <script src="./js/global-settings.js"></script>
+    <script src="./js/auto-translator.js"></script>
+    <script src="./js/waiting-room.js" type="module"></script>
+    <script src="./js/music-controller.js"></script>
+    <script src="./js/icebot.js"></script>
+    <!-- Filtros SVG para modo daltónico -->
+    <svg width="0" height="0" style="position: absolute;">
+        <defs>
+            <filter id="protanopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.567, 0.433, 0, 0, 0 0.558, 0.442, 0, 0, 0 0, 0.242, 0.758, 0, 0 0, 0, 0, 1, 0"/>
+            </filter>
+            <filter id="deuteranopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.625, 0.375, 0, 0, 0 0.7, 0.3, 0, 0, 0 0, 0.3, 0.7, 0, 0 0, 0, 0, 1, 0"/>
+            </filter>
+            <filter id="tritanopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.95, 0.05, 0, 0, 0 0, 0.433, 0.567, 0, 0 0, 0.475, 0.525, 0, 0 0, 0, 0, 1, 0"/>
+            </filter>
+        </defs>
+    </svg>
+    <audio id="musicaFondo" loop style="display: none;">
+        <source src="../musica/soundtrack.mp3" type="audio/mpeg">
+    </audio>
+    <div class="floating-dino">
+        <img src="./img/icestudio.png" alt="logoempresa">
+    </div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+.menu-button-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.back-to-menu-btn {
+  background-image: url("../img/button.png");
+  background-position: center center;
+  background-size: 135% 380%;
+  background-color: transparent;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: "FuenteDraftosaurios", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+  transition: transform 0.2s ease, background-size 0.2s ease;
+}
+
+.back-to-menu-btn:hover {
+  transform: translateY(-2px);
+  background-size: 132% 370%;
+}
+
+.back-to-menu-btn:active {
+  transform: translateY(0);
+  background-size: 135% 380%;
+}
+
+@media (max-width: 768px) {
+  .menu-button-container {
+    bottom: 15px;
+    right: 15px;
+  }
+
+  .back-to-menu-btn {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}

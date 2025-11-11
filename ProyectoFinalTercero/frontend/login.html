@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Draftosaurus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./styles/global-settings.css">
+    <link rel="stylesheet" href="./styles/login.css">
+    <link rel="icon" href="./img/icestudio.png">
+</head>
+<body>
+    <!-- Contenedor de login -->
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <img src="./img/Logo.png" alt="Draftosaurus" class="login-logo">
+                <h2 class="welcome-text">¡Bienvenido al Mundo Jurásico!</h2>
+            </div>
+            
+            <!-- Mensajes del sistema -->
+            <span id="showMessage"></span>
+            
+            <!-- Formulario de login -->
+            <form id="submit" class="login-form" action="javascript:void(0);" method="post">
+                <div class="form-group">
+                    <label for="email" class="form-label">
+                        <i class="fas fa-envelope"></i> Usuario o Email
+                    </label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="email" 
+                        name="email" 
+                        placeholder="tucorreo@email.com" 
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="form-label">
+                        <i class="fas fa-lock"></i> Contraseña
+                    </label>
+                    <input 
+                        type="password" 
+                        class="form-control" 
+                        id="password" 
+                        name="password" 
+                        placeholder="********" 
+                        required>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="showPass">
+                    <label class="form-check-label" for="showPass">
+                        Mostrar Contraseña
+                    </label>
+                </div>
+                <div class="button-group">
+                    <button type="submit" class="btn-login" value="Enviar">
+                        <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                    </button>
+                    <button type="reset" class="btn-reset" value="Limpiar">
+                        <i class="fas fa-eraser"></i> Limpiar
+                    </button>
+                </div>
+            </form>
+            
+            <!-- Pie del formulario -->
+            <div class="login-footer">
+                <p>¿No tienes cuenta? <a href="./registro.html" class="register-link">Regístrate aquí</a></p>
+                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255, 255, 255, 0.3);">
+                    <button type="button" id="btn-guest-mode" class="btn-guest" style="width: 100%; padding: 12px; background: #6c757d; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; transition: background 0.3s;">
+                        <i class="fas fa-user-secret"></i> Continuar como Invitado
+                    </button>
+                    <p style="margin-top: 10px; font-size: 12px; color: #ffffff; text-align: center;">
+                        Los invitados solo pueden unirse a salas con código
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Filtros SVG para modo daltónico -->
+    <svg width="0" height="0" style="position: absolute;">
+        <defs>
+            <filter id="protanopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.567, 0.433, 0, 0, 0 0.558, 0.442, 0, 0, 0 0, 0.242, 0.758, 0, 0 0, 0, 0, 1, 0"/>
+            </filter>
+            <filter id="deuteranopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.625, 0.375, 0, 0, 0 0.7, 0.3, 0, 0, 0 0, 0.3, 0.7, 0, 0 0, 0, 0, 1, 0"/>
+            </filter>
+            <filter id="tritanopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.95, 0.05, 0, 0, 0 0, 0.433, 0.567, 0, 0 0, 0.475, 0.525, 0, 0 0, 0, 0, 1, 0"/>
+            </filter>
+        </defs>
+    </svg>
+    <script src="./js/api-config.js" type="module"></script>
+    <script src="./js/global-settings.js"></script>
+    <script src="./js/auto-translator.js"></script>
+    <script src="./js/login.js" type="module"></script>
+    
+    <!-- Dinosaurio flotante -->
+    <div class="floating-dino">
+        <img src="./img/icestudio.png" alt="logoempresa">
+    </div>
+</body>
+</html>

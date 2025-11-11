@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Continuar Partida - Draftosaurus</title>
+    <link rel="stylesheet" href="./styles/global-settings.css" />
+    <link rel="stylesheet" href="./styles/juego.css" />
+    <link rel="stylesheet" href="./styles/floating-button.css" />
+    <link rel="stylesheet" href="./styles/notification.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="icon" href="./img/icestudio.png">
+    <link rel="stylesheet" href="./styles/musica.css">
+</head>
+<body>
+    <!-- Barra superior -->
+    <header class="container__nav">
+        <nav class="nav">
+            <a href="./menujugador.html" class="logo" style="display: block; text-decoration: none;"></a>
+            <div class="nav-links">
+            </div>
+            <div id="username" class="user__menu">USUARIO</div>
+        </nav>
+    </header>
+    
+    <!-- Contenedor principal del juego -->
+    <main class="container__containers">
+        <div class="container__turno__colocados">
+            <div id="player" class="player">CARGANDO...</div>
+            <div id="timer" class="timer">60S</div>
+            <div id="ronda" class="ronda">RONDA 1/2</div>
+            <div id="colocados" class="colocados">TURNO 0/12</div>
+            <div id="die-result" style="display: none">
+                ESPERANDO RESULTADO DEL DADO...
+            </div>
+        </div>
+        
+        <!-- Tablero del juego -->
+        <div class="container__tabla">
+            <div class="tabla spring-board" id="gameBoard">
+                <div class="drop-zone forest-same-0" data-zone="forest-same" data-slot="0" data-area="bosque" data-side="derecha">
+                    <div id="dinos__igual__0" class="dinos__igual"></div>
+                </div>
+                <div class="drop-zone forest-same-1" data-zone="forest-same" data-slot="1" data-area="bosque" data-side="derecha">
+                    <div id="dinos__igual__1" class="dinos__igual"></div>
+                </div>
+                <div class="drop-zone forest-same-2" data-zone="forest-same" data-slot="2" data-area="bosque" data-side="derecha">
+                    <div id="dinos__igual__2" class="dinos__igual"></div>
+                </div>
+                <div class="drop-zone forest-same-3" data-zone="forest-same" data-slot="3" data-area="bosque" data-side="derecha">
+                    <div id="dinos__igual__3" class="dinos__igual"></div>
+                </div>
+                <div class="drop-zone forest-same-4" data-zone="forest-same" data-slot="4" data-area="bosque" data-side="derecha">
+                    <div id="dinos__igual__4" class="dinos__igual"></div>
+                </div>
+                <div class="drop-zone forest-same-5" data-zone="forest-same" data-slot="5" data-area="bosque" data-side="derecha">
+                    <div id="dinos__igual__5" class="dinos__igual"></div>
+                </div>
+                <div class="drop-zone prairie-diff-0" data-zone="prairie-diff" data-slot="0" data-area="bosque" data-side="izquierda">
+                    <div id="dinos__noigual__0" class="dinos__noigual"></div>
+                </div>
+                <div class="drop-zone prairie-diff-1" data-zone="prairie-diff" data-slot="1" data-area="bosque" data-side="izquierda">
+                    <div id="dinos__noigual__1" class="dinos__noigual"></div>
+                </div>
+                <div class="drop-zone prairie-diff-2" data-zone="prairie-diff" data-slot="2" data-area="bosque" data-side="izquierda">
+                    <div id="dinos__noigual__2" class="dinos__noigual"></div>
+                </div>
+                <div class="drop-zone prairie-diff-3" data-zone="prairie-diff" data-slot="3" data-area="bosque" data-side="izquierda">
+                    <div id="dinos__noigual__3" class="dinos__noigual"></div>
+                </div>
+                <div class="drop-zone prairie-diff-4" data-zone="prairie-diff" data-slot="4" data-area="bosque" data-side="izquierda">
+                    <div id="dinos__noigual__4" class="dinos__noigual"></div>
+                </div>
+                <div class="drop-zone prairie-diff-5" data-zone="prairie-diff" data-slot="5" data-area="bosque" data-side="izquierda">
+                    <div id="dinos__noigual__5" class="dinos__noigual"></div>
+                </div>
+                <div class="drop-zone trio-0" data-zone="trio" data-slot="0" data-area="llanura" data-side="izquierda">
+                    <div id="dinos__tres__0" class="dinos__tres"></div>
+                </div>
+                <div class="drop-zone trio-1" data-zone="trio" data-slot="1" data-area="llanura" data-side="izquierda">
+                    <div id="dinos__tres__1" class="dinos__tres"></div>
+                </div>
+                <div class="drop-zone trio-2" data-zone="trio" data-slot="2" data-area="llanura" data-side="izquierda">
+                    <div id="dinos__tres__2" class="dinos__tres"></div>
+                </div>
+                <div class="drop-zone love-prairie-0" data-zone="love-prairie" data-slot="0" data-area="llanura" data-side="izquierda">
+                    <div id="dinos__pareja__0" class="dinos__pareja"></div>
+                </div>
+                <div class="drop-zone love-prairie-1" data-zone="love-prairie" data-slot="1" data-area="llanura" data-side="izquierda">
+                    <div id="dinos__pareja__1" class="dinos__pareja"></div>
+                </div>
+                <div class="drop-zone love-prairie-2" data-zone="love-prairie" data-slot="2" data-area="llanura" data-side="izquierda">
+                    <div id="dinos__pareja__2" class="dinos__pareja"></div>
+                </div>
+                <div class="drop-zone love-prairie-3" data-zone="love-prairie" data-slot="3" data-area="llanura" data-side="izquierda">
+                    <div id="dinos__pareja__3" class="dinos__pareja"></div>
+                </div>
+                <div class="drop-zone love-prairie-4" data-zone="love-prairie" data-slot="4" data-area="llanura" data-side="izquierda">
+                    <div id="dinos__pareja__4" class="dinos__pareja"></div>
+                </div>
+                <div class="drop-zone love-prairie-5" data-zone="love-prairie" data-slot="5" data-area="llanura" data-side="izquierda">
+                    <div id="dinos__pareja__5" class="dinos__pareja"></div>
+                </div>
+                <div class="drop-zone king-0" data-zone="king" data-slot="0" data-area="llanura" data-side="centro">
+                    <div id="dinos__rey__0" class="dinos__rey"></div>
+                </div>
+                <div class="drop-zone island-0" data-zone="island" data-slot="0" data-area="llanura" data-side="derecha">
+                    <div id="dinos__solo__0" class="dinos__solo"></div>
+                </div>
+                <div class="drop-zone river-0" data-zone="river" data-slot="0" data-area="rio" data-side="centro">
+                    <div id="dinos__rio__0" class="dinos__rio"></div>
+                </div>
+                <div class="drop-zone river-1" data-zone="river" data-slot="1" data-area="rio" data-side="centro">
+                    <div id="dinos__rio__1" class="dinos__rio"></div>
+                </div>
+                <div class="drop-zone river-2" data-zone="river" data-slot="2" data-area="rio" data-side="centro">
+                    <div id="dinos__rio__2" class="dinos__rio"></div>
+                </div>
+                <div class="drop-zone river-3" data-zone="river" data-slot="3" data-area="rio" data-side="centro">
+                    <div id="dinos__rio__3" class="dinos__rio"></div>
+                </div>
+                <div class="drop-zone river-4" data-zone="river" data-slot="4" data-area="rio" data-side="centro">
+                    <div id="dinos__rio__4" class="dinos__rio"></div>
+                </div>
+                <div class="drop-zone river-5" data-zone="river" data-slot="5" data-area="rio" data-side="centro">
+                    <div id="dinos__rio__5" class="dinos__rio"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bolsa de dinosaurios -->
+        <div class="container__dinos">
+            <div id="player-bag" class="dinos"></div>
+            <div id="die-container" class="die-container" style="display: none;">
+                <div class="die-header">
+                    <h3 id="die-title">🎲 RESULTADO DEL DADO</h3>
+                </div>
+                <div id="die-face" class="die-face">
+                    <span id="die-text">TODOS</span>
+                </div>
+                <p id="die-description" class="die-description">
+                    PUEDES COLOCAR EN CUALQUIER RECINTO
+                </p>
+                <p id="die-affected-players" class="die-affected-players">
+                </p>
+            </div>
+        </div>
+        
+        <!-- Panel de información -->
+        <div class="container__info">
+            <button id="roll-dice-btn" class="roll-dice-btn">
+                🎲 LANZAR DADO
+            </button>
+            <div class="info">
+            </div>
+            <div id="board-selector" class="board-selector">
+                <h4>VER TABLERO DE:</h4>
+                <div id="board-selector-buttons" class="board-selector-buttons">
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Botón para volver al menú -->
+    <div class="menu-button-container"> 
+        <button id="back-to-menu" class="back-to-menu-btn" onclick="window.location.href='menujugador.html'">VOLVER AL MENÚ
+</button>
+    </div>
+    
+    <!-- Modal de fin de juego -->
+    <div id="game-over-modal" class="modal" style="display: none">
+        <div class="modal-content">
+            <img src="./img/icestudio.png" alt="IceStudio" class="modal-logo">
+            <div class="modal-header">
+                <h2 class="modal-title">¡FIN DEL JUEGO!</h2>
+            </div>
+            <div id="final-scores" class="final-scores-container"></div>
+            <button id="close-modal-btn" class="modal-button">VOLVER AL MENÚ</button>
+        </div>
+    </div>
+    <script src="./js/music-controller.js"></script>
+    <!-- Filtros SVG para modo daltónico -->
+    <svg width="0" height="0" style="position: absolute;">
+        <defs>
+            <filter id="protanopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.567, 0.433, 0, 0, 0 0.558, 0.442, 0, 0, 0 0, 0.242, 0.758, 0, 0 0, 0, 0, 1, 0"/>
+            </filter>
+            <filter id="deuteranopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.625, 0.375, 0, 0, 0 0.7, 0.3, 0, 0, 0 0, 0.3, 0.7, 0, 0 0, 0, 0, 1, 0"/>
+            </filter>
+            <filter id="tritanopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.95, 0.05, 0, 0, 0 0, 0.433, 0.567, 0, 0 0, 0.475, 0.525, 0, 0 0, 0, 0, 1, 0"/>
+            </filter>
+        </defs>
+    </svg>
+    <script src="./js/api-config.js" type="module"></script>
+    <script src="./js/global-settings.js"></script>
+    <script src="./js/auto-translator.js"></script>
+    <script src="./js/logicaDeJuego.js" type="module"></script>
+    <audio id="musicaFondo" loop style="display: none;">
+        <source src="../musica/soundtrack.mp3" type="audio/mpeg">
+    </audio>
+</body>
+</html>

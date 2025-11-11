@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reglas - Draftosaurus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./styles/global-settings.css">
+    <link rel="stylesheet" href="./styles/manual.css">
+    <link rel="icon" href="./img/icestudio.png">
+    <link rel="stylesheet" href="./styles/musica.css">
+    <link rel="stylesheet" href="./styles/icebot.css">
+</head>
+<body>
+    <!-- Barra de navegación -->
+<nav class="navbar-custom">
+    <a class="navbar-brand" href="./menujugador.html">
+        <img src="./img/inicio.png" alt="Draftosaurus">
+    </a>
+    <div class="nav-links">
+        <a class="nav-link" href="./homepage.html"><i class="fas fa-home"></i> IceStudio</a>
+        <a class="nav-link" href="./configuracion.html"><i class="fas fa-cog"></i> Ajustes</a>
+        <div class="user-dropdown">
+            <button class="user-button" id="nombre-usuario">
+                <i class="fas fa-user-circle"></i> <span>Usuario</span>
+            </button>
+            <div class="dropdown-menu-custom" id="userDropdown">
+                <div class="dropdown-item-custom" id="btn-logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Encabezado -->
+<div class="rules-header">
+    <img src="./img/Logo.png" alt="Draftosaurus" class="logo-header">
+</div>
+
+<!-- Contenedor principal -->
+    <div class="container rules-container">
+        <section class="rules-section">
+            <div class="section-icon">
+                <i class="fas fa-gamepad"></i>
+            </div>
+            <h2>Descripción General</h2>
+            <p class="lead">¡La ciencia ha conseguido clonar dinosaurios! Diseña el parque más espectacular organizando los recintos para que tus visitantes disfruten de estas fantásticas criaturas.</p>
+        </section>
+        <section class="rules-section">
+            <div class="section-icon">
+                <i class="fas fa-box"></i>
+            </div>
+            <h2>Componentes</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <ul class="component-list">
+                        <li><i class="fas fa-map"></i> 5 tableros de parque (dos caras: verano/invierno)</li>
+                        <li><i class="fas fa-dragon"></i> 60 Dinosaurios (10 por cada una de las 6 especies)</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <ul class="component-list">
+                        <li><i class="fas fa-dice"></i> 1 dado de colocación</li>
+                        <li><i class="fas fa-sack"></i> 1 bolsa de tela</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section class="rules-section">
+            <div class="section-icon">
+                <i class="fas fa-cog"></i>
+            </div>
+            <h2>Preparación</h2>
+            <div class="setup-cards">
+                <div class="setup-card">
+                    <h4>Según número de jugadores:</h4>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Jugadores</th>
+                                <th>Dinosaurios en bolsa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2 jugadores</td>
+                                <td>48 (retira 2 de cada especie)</td>
+                            </tr>
+                            <tr>
+                                <td>3 jugadores</td>
+                                <td>36 (retira 4 de cada especie)</td>
+                            </tr>
+                            <tr>
+                                <td>4 jugadores</td>
+                                <td>48 (retira 2 de cada especie)</td>
+                            </tr>
+                            <tr>
+                                <td>5 jugadores</td>
+                                <td>60 (todos)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <section class="rules-section">
+            <div class="section-icon">
+                <i class="fas fa-play-circle"></i>
+            </div>
+            <h2>Desarrollo del Juego</h2>
+            <div class="gameplay-steps">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h4>Inicio de Ronda</h4>
+                    <p>Cada jugador saca 6 dinosaurios de la bolsa sin mirar. La partida se divide en 2 rondas de 6 turnos cada una.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h4>Lanzar Dado</h4>
+                    <p>Un jugador lanza el dado. Todos excepto quien lanzó deben obedecer la restricción del dado.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h4>Colocar Dinosaurio</h4>
+                    <p>Todos eligen y revelan simultáneamente 1 dinosaurio para colocar en su parque.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h4>Pasar Mano</h4>
+                    <p>Los dinosaurios restantes se pasan al jugador de la izquierda. El dado también se pasa.</p>
+                </div>
+            </div>
+        </section>
+        <section class="rules-section">
+            <div class="section-icon">
+                <i class="fas fa-map-marked-alt"></i>
+            </div>
+            <h2>Recintos del Parque</h2>
+            <div class="park-rules">
+                <div class="park-rule-card forest">
+                    <h4><i class="fas fa-tree"></i> Bosque de la Semejanza</h4>
+                    <p>Solo dinosaurios de la misma especie. Puntos según cantidad total.</p>
+                    <div class="points-table">1=1pt | 2=2pt | 3=4pt | 4=8pt | 5=15pt | 6=24pt</div>
+                </div>
+                <div class="park-rule-card prairie">
+                    <h4><i class="fas fa-seedling"></i> Prado de la Diferencia</h4>
+                    <p>Solo dinosaurios de especies distintas. Puntos según cantidad.</p>
+                    <div class="points-table">1=1pt | 2=3pt | 3=6pt | 4=10pt | 5=15pt | 6=21pt</div>
+                </div>
+                <div class="park-rule-card love">
+                    <h4><i class="fas fa-heart"></i> Pradera del Amor</h4>
+                    <p>Cualquier especie. 5 puntos por cada pareja de la misma especie.</p>
+                </div>
+                <div class="park-rule-card trio">
+                    <h4><i class="fas fa-users"></i> Trío Frondoso</h4>
+                    <p>Máximo 3 dinosaurios. 7 puntos si hay exactamente 3.</p>
+                </div>
+                <div class="park-rule-card king">
+                    <h4><i class="fas fa-crown"></i> Rey de la Selva</h4>
+                    <p>Solo 1 dinosaurio. 7 puntos si tienes más (o igual) de esa especie que los demás.</p>
+                </div>
+                <div class="park-rule-card island">
+                    <h4><i class="fas fa-island-tropical"></i> Isla Solitaria</h4>
+                    <p>Solo 1 dinosaurio. 7 puntos si es el único de su especie en tu parque.</p>
+                </div>
+                <div class="park-rule-card river">
+                    <h4><i class="fas fa-water"></i> El Río</h4>
+                    <p>Zona especial. Cada dinosaurio vale 1 punto.</p>
+                </div>
+                <div class="park-rule-card trex">
+                    <h4><i class="fas fa-dragon"></i> Bonus T-Rex</h4>
+                    <p>Cada recinto con al menos un T-Rex suma 1 punto adicional.</p>
+                </div>
+            </div>
+        </section>
+        <section class="rules-section">
+            <div class="section-icon">
+                <i class="fas fa-dice"></i>
+            </div>
+            <h2>Restricciones del Dado</h2>
+            <p class="lead" style="margin-bottom: 25px; font-size: 1.1rem; font-weight: 600;">⚠️ <strong>IMPORTANTE:</strong> El jugador que lanza el dado NO está sujeto a estas restricciones y puede colocar en cualquier recinto. Todos los demás jugadores deben seguir la restricción indicada.</p>
+            <div class="dice-rules">
+                <div class="dice-rule">
+                    <i class="fas fa-tree"></i>
+                    <div class="dice-rule-content">
+                        <strong>🌲 Árboles Comunes</strong>
+                        <p>Debes colocar en cualquier recinto del <strong>área superior (Bosque)</strong> del tablero.</p>
+                        <small><strong>Recintos válidos:</strong> Bosque de la Semejanza (lado derecho), Prado de la Diferencia (lado izquierdo)</small>
+                        <small style="margin-top: 5px; color: rgba(255, 255, 255, 0.75);"><i class="fas fa-info-circle"></i> Esta es el área superior del mapa, identificada por los árboles.</small>
+                    </div>
+                </div>
+                <div class="dice-rule">
+                    <i class="fas fa-seedling"></i>
+                    <div class="dice-rule-content">
+                        <strong>🌱 Manzanos</strong>
+                        <p>Debes colocar en cualquier recinto del <strong>área inferior (Llanura)</strong> del tablero.</p>
+                        <small><strong>Recintos válidos:</strong> Trío Frondoso (izquierda), Pradera del Amor (izquierda), Rey de la Selva (centro), Isla Solitaria (derecha)</small>
+                        <small style="margin-top: 5px; color: rgba(255, 255, 255, 0.75);"><i class="fas fa-info-circle"></i> Esta es el área inferior del mapa, identificada por los manzanos.</small>
+                    </div>
+                </div>
+                <div class="dice-rule">
+                    <i class="fas fa-restroom"></i>
+                    <div class="dice-rule-content">
+                        <strong>🚻 Baños</strong>
+                        <p>Debes colocar en recintos del <strong>lado derecho</strong> del tablero (respecto al Río central).</p>
+                        <small><strong>Recintos válidos:</strong> Bosque de la Semejanza (área Bosque), Isla Solitaria (área Llanura)</small>
+                        <small style="margin-top: 5px; color: rgba(255, 255, 255, 0.75);"><i class="fas fa-info-circle"></i> El Río divide el tablero en dos lados. Los baños están a la derecha.</small>
+                    </div>
+                </div>
+                <div class="dice-rule">
+                    <i class="fas fa-coffee"></i>
+                    <div class="dice-rule-content">
+                        <strong>☕ Cafeterías</strong>
+                        <p>Debes colocar en recintos del <strong>lado izquierdo</strong> del tablero (respecto al Río central).</p>
+                        <small><strong>Recintos válidos:</strong> Prado de la Diferencia (área Bosque), Trío Frondoso (área Llanura), Pradera del Amor (área Llanura)</small>
+                        <small style="margin-top: 5px; color: rgba(255, 255, 255, 0.75);"><i class="fas fa-info-circle"></i> El Río divide el tablero en dos lados. Las cafeterías están a la izquierda.</small>
+                    </div>
+                </div>
+                <div class="dice-rule">
+                    <i class="fas fa-box-open"></i>
+                    <div class="dice-rule-content">
+                        <strong>📦 Recinto Vacío</strong>
+                        <p>Debes colocar en un <strong>recinto que esté completamente vacío</strong> (sin ningún dinosaurio).</p>
+                        <small><strong>Puede ser cualquier recinto:</strong> Debe estar vacío, sin importar su tipo, área o lado.</small>
+                        <small style="margin-top: 5px; color: rgba(255, 255, 255, 0.75);"><i class="fas fa-info-circle"></i> Si todos los recintos están ocupados, no puedes colocar este turno.</small>
+                    </div>
+                </div>
+                <div class="dice-rule">
+                    <i class="fas fa-ban"></i>
+                    <div class="dice-rule-content">
+                        <strong>🚫 Sin T-Rex</strong>
+                        <p><strong>NO puedes colocar</strong> en un recinto donde ya hay un T-Rex (dinosaurio rojo).</p>
+                        <small><strong>Puedes colocar en:</strong> Cualquier otro recinto, incluso si tiene otros tipos de dinosaurios (amarillo, verde, azul, naranja, rosa).</small>
+                        <small style="margin-top: 5px; color: rgba(255, 255, 255, 0.75);"><i class="fas fa-info-circle"></i> Solo se prohíbe colocar donde hay un T-Rex rojo. Otros dinosaurios no importan.</small>
+                    </div>
+                </div>
+            </div>
+            <div class="dice-note" style="margin-top: 30px; padding: 20px; background: rgba(255, 243, 205, 0.6); border-radius: 10px; border-left: 4px solid var(--primary-color);">
+                <p style="margin: 0 0 10px 0; font-size: 1rem; font-weight: 600; color: var(--text-dark);">
+                    <i class="fas fa-info-circle"></i> <strong>Zonas Especiales:</strong>
+                </p>
+                <ul style="margin: 0; padding-left: 25px; color: var(--text-dark); font-size: 0.95rem; line-height: 1.8;">
+                    <li><strong>El Río:</strong> Siempre permite la colocación si está vacío, independientemente de las restricciones del dado.</li>
+                    <li><strong>Isla Solitaria:</strong> Siempre permite la colocación si está vacía, independientemente de las restricciones del dado.</li>
+                    <li><strong>El jugador que lanza el dado:</strong> Puede colocar en cualquier recinto, sin restricciones.</li>
+                </ul>
+            </div>
+        </section>
+        <section class="rules-section tutorial-section">
+            <div class="section-icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h2>¿Primera vez jugando?</h2>
+            <p>Aprende las reglas básicas y conviértete en un experto constructor de parques jurásicos</p>
+            <div class="tutorial-container">
+                <div class="video-wrapper">
+                    <iframe 
+                        src="https://www.youtube.com/embed/K0OrSa3EP38" 
+                        title="Tutorial de Draftosaurus" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="tutorial-info">
+                    <h4>Video Tutorial</h4>
+                    <p>Mira este completo tutorial en video para aprender a jugar Draftosaurus paso a paso.</p>
+                    <ul>
+                        <li>Duración: 10 minutos</li>
+                        <li>Incluye ejemplos de partida</li>
+                        <li>Tips y estrategias básicas</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section class="rules-section">
+            <div class="section-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <h2>Final de Partida</h2>
+            <div class="end-game-info">
+                <p>La partida termina después de la Ronda 2 (12 dinosaurios en cada parque).</p>
+                <p>Suma tus puntos según las reglas de cada recinto. ¡El jugador con más puntos gana!</p>
+                <div class="tie-breaker"><strong>Desempate:</strong> Gana quien tenga menos T-Rex. Si persiste el empate, comparten la victoria.</div>
+            </div>
+        </section>
+    </div>
+
+<!-- Pie de página -->
+<footer class="game-footer">
+    <div class="footer-content">
+        <div>
+            <p class="footer-text">© 2025 Draftosaurus Digital | Todos los derechos reservados a IceStudio.</p>
+        </div>
+        <div class="social-links">
+            <a href="https://discord.com/invite/j23At8xnv6"><i class="fab fa-discord"></i></a>
+            <a href="https://x.com/icestudio2025"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.instagram.com/icestudiooficial/"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@ICESTUDIO_2025"><i class="fab fa-youtube"></i></a>
+        </div>
+    </div>
+</footer>
+
+<!-- Dinosaurio flotante -->
+    <div class="floating-dino">
+        <img src="./img/icestudio.png" alt="Dinosaurio">
+    </div>
+    <script src="./js/music-controller.js"></script>
+    <script src="./js/global-settings.js"></script>
+    <!-- Filtros SVG para modo daltónico -->
+    <svg width="0" height="0" style="position: absolute;">
+        <defs>
+            <filter id="protanopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.567, 0.433, 0, 0, 0 0.558, 0.442, 0, 0, 0 0, 0.242, 0.758, 0, 0 0, 0, 0, 1, 0"/>
+            </filter>
+            <filter id="deuteranopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.625, 0.375, 0, 0, 0 0.7, 0.3, 0, 0, 0 0, 0.3, 0.7, 0, 0 0, 0, 0, 1, 0"/>
+            </filter>
+            <filter id="tritanopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.95, 0.05, 0, 0, 0 0, 0.433, 0.567, 0, 0 0, 0.475, 0.525, 0, 0 0, 0, 0, 1, 0"/>
+            </filter>
+        </defs>
+    </svg>
+    <script src="./js/auto-translator.js"></script>
+    <script type="module" src="./js/manual.js"></script>
+    <script src="./js/icebot.js"></script>
+    <audio id="musicaFondo" loop style="display: none;">
+        <source src="../musica/soundtrack.mp3" type="audio/mpeg">
+    </audio>
+</body>
+</html>

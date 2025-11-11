@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draftosaurus - Historial de Partidas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./styles/global-settings.css">
+    <link rel="stylesheet" href="./styles/historial.css">
+    <link rel="stylesheet" href="./styles/musica.css">
+    <link rel="stylesheet" href="./styles/icebot.css">
+    <link rel="icon" href="./img/icestudio.png">
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <nav class="navbar-custom">
+        <a class="navbar-brand" href="./menujugador.html">
+            <img src="./img/inicio.png" alt="Draftosaurus">
+        </a>
+        <div class="nav-links">
+            <a class="nav-link" href="./homepage.html"><i class="fas fa-home"></i> IceStudio</a>
+            <a class="nav-link" href="./configuracion.html"><i class="fas fa-cog"></i> Ajustes</a>
+            <div class="user-dropdown">
+                <button class="user-button" id="nombre-usuario">
+                    <i class="fas fa-user-circle"></i> <span>Usuario</span>
+                </button>
+                <div class="dropdown-menu-custom" id="userDropdown">
+                    <div class="dropdown-item-custom" id="btn-logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Contenedor principal -->
+    <div class="main-container">
+        <div class="header-section">
+            <div class="header-content">
+                <button class="btn-back" onclick="window.location.href='menujugador.html'">
+                    <i class="fas fa-arrow-left"></i> Volver al Menú
+                </button>
+                <h1 class="page-title">
+                    <i class="fas fa-history"></i> Historial de Partidas
+                </h1>
+                <div class="header-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-trophy"></i>
+                        <span class="stat-value" id="total-partidas">0</span>
+                        <span class="stat-label">Partidas</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-crown"></i>
+                        <span class="stat-value" id="victorias">0</span>
+                        <span class="stat-label">Victorias</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-clock"></i>
+                        <span class="stat-value" id="promedio-puntos">0 min</span>
+                        <span class="stat-label">Duración Promedio</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Filtros -->
+        <div class="filters-section">
+            <div class="filter-group">
+                <label for="filtro-fecha">Filtrar por fecha:</label>
+                <select id="filtro-fecha" class="filter-select">
+                    <option value="todas">Todas las fechas</option>
+                    <option value="hoy">Hoy</option>
+                    <option value="semana">Esta semana</option>
+                    <option value="mes">Este mes</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="filtro-resultado">Filtrar por resultado:</label>
+                <select id="filtro-resultado" class="filter-select">
+                    <option value="todos">Todos los resultados</option>
+                    <option value="victoria">Solo victorias</option>
+                    <option value="derrota">Solo derrotas</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="filtro-jugadores">Filtrar por jugadores:</label>
+                <select id="filtro-jugadores" class="filter-select">
+                    <option value="todos">Todos los modos</option>
+                    <option value="2">2 jugadores</option>
+                    <option value="3">3 jugadores</option>
+                    <option value="4">4 jugadores</option>
+                    <option value="5">5 jugadores</option>
+                </select>
+            </div>
+        </div>
+        
+        <!-- Lista de partidas -->
+        <div class="games-section">
+            <div class="section-header">
+                <h2>Partidas Recientes</h2>
+                <div class="view-controls">
+                    <button class="view-btn active" id="btn-vista-lista">
+                        <i class="fas fa-list"></i> Lista
+                    </button>
+                    <button class="view-btn" id="btn-vista-grid">
+                        <i class="fas fa-th"></i> Cuadrícula
+                    </button>
+                </div>
+            </div>
+            <div id="loading-state" class="loading-state">
+                <div class="loading-spinner"></div>
+                <p>Cargando historial...</p>
+            </div>
+            <div id="empty-state" class="empty-state" style="display: none;">
+                <div class="empty-icon">
+                    <i class="fas fa-history"></i>
+                </div>
+                <h3>No hay partidas registradas</h3>
+                <p>Aún no has jugado ninguna partida. ¡Comienza tu primera aventura!</p>
+                <button class="btn-primary" onclick="window.location.href='waiting-room.html'">
+                    <i class="fas fa-play"></i> Jugar Ahora
+                </button>
+            </div>
+            <div id="games-container" class="games-container">
+            </div>
+            <div id="pagination" class="pagination" style="display: none;">
+                <button class="pagination-btn" id="btn-prev">
+                    <i class="fas fa-chevron-left"></i> Anterior
+                </button>
+                <div class="pagination-info">
+                    <span id="pagination-info">Página 1 de 1</span>
+                </div>
+                <button class="pagination-btn" id="btn-next">
+                    Siguiente <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Pie de página -->
+    <footer class="game-footer">
+        <div class="footer-content">
+            <div>
+                <p class="footer-text">© 2025 Draftosaurus Digital | Todos los derechos reservados a IceStudio.</p>
+            </div>
+            <div class="social-links">
+                <a href="https://discord.com/invite/j23At8xnv6"><i class="fab fa-discord"></i></a>
+                <a href="https://x.com/icestudio2025"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/icestudiooficial/"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@ICESTUDIO_2025"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Dinosaurio flotante -->
+    <div class="floating-dino">
+        <img src="./img/icestudio.png" alt="logoempresa">
+    </div>
+    
+    <!-- Mensajes del sistema -->
+    <div id="mensaje-sistema" class="mensaje-sistema" style="display: none"></div>
+    
+    <script>
+        const userButton = document.getElementById('nombre-usuario');
+        const dropdown = document.getElementById('userDropdown');
+        userButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            dropdown.classList.toggle('active');
+        });
+        document.addEventListener('click', function(e) {
+            if (!userButton.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+    </script>
+    <script src="./js/api-config.js" type="module"></script>
+    <script src="./js/music-controller.js"></script>
+    <script src="./js/global-settings.js"></script>
+    <script src="./js/auto-translator.js"></script>
+    <script src="./js/historial.js" type="module"></script>
+    <!-- Filtros SVG para modo daltónico -->
+    <svg width="0" height="0" style="position: absolute;">
+        <defs>
+            <filter id="protanopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.567, 0.433, 0, 0, 0 0.558, 0.442, 0, 0, 0 0, 0.242, 0.758, 0, 0 0, 0, 0, 1, 0"/>
+            </filter>
+            <filter id="deuteranopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.625, 0.375, 0, 0, 0 0.7, 0.3, 0, 0, 0 0, 0.3, 0.7, 0, 0 0, 0, 0, 1, 0"/>
+            </filter>
+            <filter id="tritanopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.95, 0.05, 0, 0, 0 0, 0.433, 0.567, 0, 0 0, 0.475, 0.525, 0, 0 0, 0, 0, 1, 0"/>
+            </filter>
+        </defs>
+    </svg>
+    <script src="./js/icebot.js"></script>
+    <audio id="musicaFondo" loop style="display: none;">
+        <source src="../musica/soundtrack.mp3" type="audio/mpeg">
+    </audio>
+</body>
+</html>

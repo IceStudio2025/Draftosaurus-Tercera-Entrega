@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draftosaurus - Seleccionar Oponente</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./styles/global-settings.css">
+    <link rel="stylesheet" href="./styles/seleccionar-oponente.css">
+    <link rel="stylesheet" href="./styles/musica.css">
+    <link rel="stylesheet" href="./styles/icebot.css">
+    <link rel="icon" href="./img/icestudio.png">
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <nav class="navbar-custom">
+        <a class="navbar-brand" href="./menujugador.html">
+            <img src="./img/inicio.png" alt="Draftosaurus">
+        </a>
+        <div class="nav-links">
+            <a class="nav-link" href="./homepage.html"><i class="fas fa-home"></i> IceStudio</a>
+            <a class="nav-link" href="./configuracion.html"><i class="fas fa-cog"></i> Ajustes</a>
+            <div class="user-dropdown">
+                <button class="user-button" id="nombre-usuario">
+                    <i class="fas fa-user-circle"></i> <span>Usuario</span>
+                </button>
+                <div class="dropdown-menu-custom" id="userDropdown">
+                    <div class="dropdown-item-custom" id="btn-logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Contenedor principal -->
+    <main class="main-container">
+        <h1 class="page-title">Selecciona un oponente para jugar</h1>
+        <div id="status" class="status info"></div>
+        <div class="opponents-container">
+            <div id="opponents" class="opponents-grid">
+            </div>
+            <div id="empty" class="empty-state" style="display: none">
+                <div class="empty-icon">
+                    <i class="fas fa-users-slash"></i>
+                </div>
+                <div class="empty-text">No hay oponentes disponibles</div>
+                <div class="empty-subtext">Intenta más tarde o invita a tus amigos a jugar</div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Pie de página -->
+    <footer class="game-footer">
+        <div class="footer-content">
+            <div>
+                <p class="footer-text">© 2025 Draftosaurus Digital | Todos los derechos reservados a IceStudio.</p>
+            </div>
+            <div class="social-links">
+                <a href="https://discord.com/invite/j23At8xnv6"><i class="fab fa-discord"></i></a>
+                <a href="https://x.com/icestudio2025"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/icestudiooficial/"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@ICESTUDIO_2025"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        const userButton = document.getElementById('nombre-usuario');
+        const dropdown = document.getElementById('userDropdown');
+        userButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            dropdown.classList.toggle('active');
+        });
+        document.addEventListener('click', function(e) {
+            if (!userButton.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+        function addOpponent(name, isOnline = true) {
+            const grid = document.getElementById('opponents');
+            const card = document.createElement('div');
+            card.className = 'opponent-card';
+            const initial = name.charAt(0).toUpperCase();
+            card.innerHTML = `
+                <div class="opponent-header">
+                    <div class="opponent-avatar">${initial}</div>
+                    <div class="opponent-info">
+                        <div class="opponent-name">${name}</div>
+                        <div class="opponent-status">
+                            <i class="fas fa-circle"></i> En línea
+                        </div>
+                    </div>
+                </div>
+                <div class="opponent-actions">
+                    <button class="btn-opponent btn-primary">
+                        <i class="fas fa-gamepad"></i> Jugar
+                    </button>
+                    <button class="btn-opponent btn-secondary">
+                        <i class="fas fa-user"></i> Perfil
+                    </button>
+                </div>
+            `;
+            grid.appendChild(card);
+            document.getElementById('empty').style.display = 'none';
+        }
+    </script>
+    
+    <script src="./js/api-config.js" type="module"></script>
+    <script src="./js/global-settings.js"></script>
+    <script src="./js/auto-translator.js"></script>
+    <script src="./js/music-controller.js"></script>
+    <script type="module" src="./js/seleccionar-oponente.js"></script>
+    <script src="./js/icebot.js"></script>
+    <audio id="musicaFondo" loop style="display: none;">
+        <source src="../musica/soundtrack.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- Filtros SVG para modo daltónico -->
+    <svg width="0" height="0" style="position: absolute;">
+        <defs>
+            <filter id="protanopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.567, 0.433, 0, 0, 0 0.558, 0.442, 0, 0, 0 0, 0.242, 0.758, 0, 0 0, 0, 0, 1, 0"/>
+            </filter>
+            <filter id="deuteranopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.625, 0.375, 0, 0, 0 0.7, 0.3, 0, 0, 0 0, 0.3, 0.7, 0, 0 0, 0, 0, 1, 0"/>
+            </filter>
+            <filter id="tritanopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.95, 0.05, 0, 0, 0 0, 0.433, 0.567, 0, 0 0, 0.475, 0.525, 0, 0 0, 0, 0, 1, 0"/>
+            </filter>
+        </defs>
+    </svg>
+    <!-- Dinosaurio flotante -->
+    <div class="floating-dino">
+        <img src="./img/icestudio.png" alt="logoempresa">
+    </div>
+</body>
+</html>

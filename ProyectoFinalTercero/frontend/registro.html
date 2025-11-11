@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Draftosaurus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./styles/global-settings.css">
+    <link rel="stylesheet" href="./styles/registro.css">
+    <link rel="icon" href="./img/icestudio.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Contenedor de registro -->
+    <div class="register-container">
+        <div class="register-card">
+            <div class="register-header">
+                <img src="./img/Logo.png" alt="Draftosaurus" class="register-logo">
+                <h2>Registro de Usuario</h2>
+                <p class="text-muted">Únete a la aventura jurásica</p>
+            </div>
+            
+            <!-- Mensajes de error -->
+            <span id="mensaje_error" class="error" style="display: none;"></span>
+            
+            <!-- Formulario de registro -->
+            <form id="form_registro" class="register-form">
+                <div class="form-group">
+                    <label for="nombre">
+                        <i class="fas fa-user"></i> Nombre de Usuario
+                    </label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Tu nombre de usuario" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">
+                        <i class="fas fa-envelope"></i> Correo Electrónico
+                    </label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="tucorreo@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-lock"></i> Contraseña
+                    </label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Mínimo 6 caracteres" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm">
+                        <i class="fas fa-check-circle"></i> Confirmar Contraseña
+                    </label>
+                    <input type="password" class="form-control" name="confirm" id="confirm" placeholder="Repite la contraseña" required>
+                </div>
+                <div class="mostrar">
+                    <label class="checkbox_linea">
+                        <input type="checkbox" id="ver_password">
+                        Mostrar contraseña
+                    </label>
+                </div>
+                <div class="submit">
+                    <button type="submit" class="btn-register">
+                        <i class="fas fa-user-plus"></i> Confirmar registro
+                    </button>
+                    <button type="reset" class="btn-reset">
+                        <i class="fas fa-eraser"></i> Limpiar
+                    </button>
+                </div>
+            </form>
+            
+            <!-- Volver al login -->
+            <div class="back-to-login">
+                <p>¿Ya tienes cuenta? <a href="./login.html">Iniciar Sesión</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Filtros SVG para modo daltónico -->
+    <svg width="0" height="0" style="position: absolute;">
+        <defs>
+            <filter id="protanopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.567, 0.433, 0, 0, 0 0.558, 0.442, 0, 0, 0 0, 0.242, 0.758, 0, 0 0, 0, 0, 1, 0"/>
+            </filter>
+            <filter id="deuteranopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.625, 0.375, 0, 0, 0 0.7, 0.3, 0, 0, 0 0, 0.3, 0.7, 0, 0 0, 0, 0, 1, 0"/>
+            </filter>
+            <filter id="tritanopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.95, 0.05, 0, 0, 0 0, 0.433, 0.567, 0, 0 0, 0.475, 0.525, 0, 0 0, 0, 0, 1, 0"/>
+            </filter>
+        </defs>
+    </svg>
+    <script src="./js/api-config.js" type="module"></script>
+    <script src="./js/global-settings.js"></script>
+    <script src="./js/auto-translator.js"></script>
+    <script src="./js/registro.js"></script>
+    
+    <!-- Dinosaurio flotante -->
+    <div class="floating-dino">
+        <img src="./img/icestudio.png" alt="logoempresa">
+    </div>
+</body>
+</html>

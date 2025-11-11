@@ -1,0 +1,217 @@
+.music-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 15px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 25px;
+    border: 1px solid rgba(255, 140, 0, 0.3);
+    height: 40px;
+}
+
+.music-btn {
+    background: none;
+    border: none;
+    color: #000000;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+}
+
+.music-btn:hover {
+    color: var(--primary-color, #ff8c00);
+    background: rgba(255, 140, 0, 0.1);
+    transform: scale(1.1);
+}
+
+/* Estilos para los iconos dentro del botón de música - Mayor especificidad */
+.music-controls .music-btn i,
+.music-controls .music-btn .fas,
+.music-controls .music-btn .fa,
+.nav-links .music-controls .music-btn i,
+.nav-links .music-controls .music-btn .fas,
+.nav-links .music-controls .music-btn .fa {
+    color: inherit !important;
+    font-size: inherit;
+}
+
+/* Estilos para modo oscuro */
+body.dark-mode .music-controls {
+    background: rgba(60, 60, 60, 0.8) !important;
+    border-color: rgba(255, 153, 51, 0.5) !important;
+}
+
+body.dark-mode .music-btn {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .music-controls .music-btn i,
+body.dark-mode .music-controls .music-btn .fas,
+body.dark-mode .music-controls .music-btn .fa,
+body.dark-mode .nav-links .music-controls .music-btn i,
+body.dark-mode .nav-links .music-controls .music-btn .fas,
+body.dark-mode .nav-links .music-controls .music-btn .fa {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .music-btn:hover {
+    color: var(--primary-color, #ff9933) !important;
+    background: rgba(255, 153, 51, 0.2) !important;
+}
+
+body.dark-mode .music-controls .music-btn:hover i,
+body.dark-mode .music-controls .music-btn:hover .fas,
+body.dark-mode .music-controls .music-btn:hover .fa,
+body.dark-mode .nav-links .music-controls .music-btn:hover i,
+body.dark-mode .nav-links .music-controls .music-btn:hover .fas,
+body.dark-mode .nav-links .music-controls .music-btn:hover .fa {
+    color: var(--primary-color, #ff9933) !important;
+}
+
+/* Asegurar que los estilos normales se apliquen cuando NO está en modo oscuro */
+body:not(.dark-mode) .music-controls {
+    background: rgba(255, 255, 255, 0.5) !important;
+    border-color: rgba(255, 140, 0, 0.3) !important;
+}
+
+body:not(.dark-mode) .music-btn {
+    color: #000000 !important;
+}
+
+body:not(.dark-mode) .music-controls .music-btn i,
+body:not(.dark-mode) .music-controls .music-btn .fas,
+body:not(.dark-mode) .music-controls .music-btn .fa,
+body:not(.dark-mode) .nav-links .music-controls .music-btn i,
+body:not(.dark-mode) .nav-links .music-controls .music-btn .fas,
+body:not(.dark-mode) .nav-links .music-controls .music-btn .fa {
+    color: #000000 !important;
+}
+
+body:not(.dark-mode) .music-btn:hover {
+    color: var(--primary-color, #ff8c00) !important;
+}
+
+body:not(.dark-mode) .music-controls .music-btn:hover i,
+body:not(.dark-mode) .music-controls .music-btn:hover .fas,
+body:not(.dark-mode) .music-controls .music-btn:hover .fa,
+body:not(.dark-mode) .nav-links .music-controls .music-btn:hover i,
+body:not(.dark-mode) .nav-links .music-controls .music-btn:hover .fas,
+body:not(.dark-mode) .nav-links .music-controls .music-btn:hover .fa {
+    color: var(--primary-color, #ff8c00) !important;
+}
+
+.volume-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 100%;
+}
+
+.volume-slider {
+    width: 80px;
+    height: 4px;
+    cursor: pointer;
+    appearance: none;
+    background: linear-gradient(to right, var(--primary-color, #ff8c00) 0%, var(--primary-color, #ff8c00) 50%, #ddd 50%, #ddd 100%);
+    border-radius: 5px;
+    outline: none;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    background: var(--primary-color, #ff8c00);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    background: var(--secondary-color, #d17600);
+}
+
+.volume-slider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    background: var(--primary-color, #ff8c00);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.volume-slider::-moz-range-thumb:hover {
+    transform: scale(1.2);
+    background: var(--secondary-color, #d17600);
+}
+
+.volume-text {
+    font-size: 12px;
+    color: #000000;
+    min-width: 35px;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* Estilos para modo oscuro - volume-text */
+body.dark-mode .volume-text {
+    color: #e0e0e0 !important;
+}
+
+body:not(.dark-mode) .volume-text {
+    color: #000000;
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 1024px) {
+    .music-controls {
+        padding: 5px 10px;
+        gap: 8px;
+    }
+    
+    .volume-slider {
+        width: 60px;
+    }
+}
+
+@media (max-width: 768px) {
+    .music-controls {
+        order: -1;
+        width: 100%;
+        justify-content: center;
+        margin-top: 10px;
+    }
+    
+    .volume-text {
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .music-controls {
+        gap: 5px;
+        padding: 5px;
+    }
+    
+    .volume-slider {
+        width: 50px;
+    }
+    
+    .music-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 16px;
+    }
+}

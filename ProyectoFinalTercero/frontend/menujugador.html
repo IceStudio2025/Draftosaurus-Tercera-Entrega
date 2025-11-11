@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draftosaurus - Menú Principal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./styles/global-settings.css">
+    <link rel="stylesheet" href="./styles/menujugador.css">
+    <link rel="stylesheet" href="./styles/musica.css">
+    <link rel="stylesheet" href="./styles/icebot.css">
+    <link rel="icon" href="./img/icestudio.png">
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <nav class="navbar-custom">
+        <a class="navbar-brand" href="./menujugador.html">
+            <img src="./img/inicio.png" alt="Draftosaurus">
+        </a>
+        <div class="nav-links">
+            <a class="nav-link" href="./homepage.html"><i class="fas fa-home"></i> IceStudio</a>
+            <a class="nav-link" href="./configuracion.html"><i class="fas fa-cog"></i> Ajustes</a>
+            <div class="user-dropdown">
+                <button class="user-button" id="nombre-usuario">
+                    <i class="fas fa-user-circle"></i> <span>Usuario</span>
+                </button>
+                <div class="dropdown-menu-custom" id="userDropdown">
+                    <div class="dropdown-item-custom" id="btn-logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Contenedor principal -->
+    <div class="main-container">
+        <div class="hero-section">
+            <img src="./img/Logo.png" alt="DRAFTOSAURUS" class="main-logo">
+        </div>
+        <div class="game-modes-container">
+            <h2 class="section-title">Elige tu Modo de Juego</h2>
+            <div class="game-buttons-row">
+                <div class="game-mode-card">
+                    <div class="card-icon">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <h3>Jugar</h3>
+                    <p>Comienza una nueva partida</p>
+                    <button class="btn-game-mode" id="btn-nuevo-juego">
+                        <i class="fas fa-play"></i> Jugar Ahora
+                    </button>
+                </div>
+                <div class="game-mode-card">
+                    <div class="card-icon">
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <h3>Crea</h3>
+                    <p>Crea una nueva partida</p>
+                    <button class="btn-game-mode" id="btn-crea-juego" onclick="window.location.href='waiting-room.html'">
+                        <i class="fas fa-plus"></i> Crear Ahora
+                    </button>
+                </div>
+                <div class="game-mode-card">
+                    <div class="card-icon">
+                        <i class="fas fa-sign-in-alt"></i>
+                    </div>
+                    <h3>Unirse</h3>
+                    <p>Únete a una sala con código</p>
+                    <button class="btn-game-mode" id="btn-unirse-sala" onclick="window.location.href='waiting-room.html?join=true'">
+                        <i class="fas fa-sign-in-alt"></i> Unirse a Sala
+                    </button>
+                </div>
+                
+                <div class="game-mode-card">
+                    <div class="card-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3>Historial</h3>
+                    <p>Revisa tus partidas anteriores</p>
+                    <button class="btn-game-mode" id="btn-historial">
+                        <i class="fas fa-history"></i> Ver Historial
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Botón de ayuda -->
+    <div class="help-button-container">
+        <button class="btn-help" id="btn-manual">
+            <img src="./img/reglas.png" alt="Reglas del juego" class="help-icon-image">
+        </button>
+    </div>
+    
+    <!-- Pie de página -->
+    <footer class="game-footer">
+        <div class="footer-content">
+            <div>
+                <p class="footer-text">© 2025 Draftosaurus Digital | Todos los derechos reservados a IceStudio.</p>
+            </div>
+            <div class="social-links">
+                <a href="https://discord.com/invite/j23At8xnv6"><i class="fab fa-discord"></i></a>
+                <a href="https://x.com/icestudio2025"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/icestudiooficial/"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@ICESTUDIO_2025"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Dinosaurio flotante -->
+    <div class="floating-dino">
+        <img src="./img/icestudio.png" alt="logoempresa">
+    </div>
+    
+    <!-- Mensajes del sistema -->
+    <div id="mensaje-sistema" class="mensaje-sistema" style="display: none"></div>
+    
+    <!-- Filtros SVG para modo daltónico -->
+    <svg width="0" height="0" style="position: absolute;">
+        <defs>
+            <!-- Filtro para Protanopia (deficiencia rojo-verde) -->
+            <filter id="protanopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.567, 0.433, 0, 0, 0
+                                                     0.558, 0.442, 0, 0, 0
+                                                     0, 0.242, 0.758, 0, 0
+                                                     0, 0, 0, 1, 0"/>
+            </filter>
+            <!-- Filtro para Deuteranopia (deficiencia verde) -->
+            <filter id="deuteranopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.625, 0.375, 0, 0, 0
+                                                     0.7, 0.3, 0, 0, 0
+                                                     0, 0.3, 0.7, 0, 0
+                                                     0, 0, 0, 1, 0"/>
+            </filter>
+            <!-- Filtro para Tritanopia (deficiencia azul-amarillo) -->
+            <filter id="tritanopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.95, 0.05, 0, 0, 0
+                                                     0, 0.433, 0.567, 0, 0
+                                                     0, 0.475, 0.525, 0, 0
+                                                     0, 0, 0, 1, 0"/>
+            </filter>
+        </defs>
+    </svg>
+    <script src="./js/api-config.js" type="module"></script>
+    <script src="./js/music-controller.js"></script>
+    <script src="./js/global-settings.js"></script>
+    <script src="./js/auto-translator.js"></script>
+    <script src="./js/menu-player.js" type="module"></script>
+    <script src="./js/icebot.js"></script>
+    <audio id="musicaFondo" loop style="display: none;">
+        <source src="../musica/soundtrack.mp3" type="audio/mpeg">
+    </audio>
+</body>
+</html>

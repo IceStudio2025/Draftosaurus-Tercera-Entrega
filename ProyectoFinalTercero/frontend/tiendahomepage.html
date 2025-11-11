@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda ICESTUDIO - Merchandising Oficial</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./styles/global-settings.css">
+    <link rel="stylesheet" href="./styles/tienda.css">
+    <link rel="icon" href="./img/icestudio.png">
+</head>
+<body>
+    <!-- Partículas de fondo -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- Barra de navegación -->
+    <nav>
+        <div class="container">
+          <a href="./tiendahomepage.html" class="store">
+            <img src="./img/logostore.png" alt="ICESTUDIO Logo">
+          </a>
+            <ul class="nav-links">
+                <li><a href="./homepage.html">Inicio</a></li>
+                <li><a href="#catalogo">Catálogo</a></li>
+                <li><a href="#destacados">Destacados</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Sección principal -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Merchandising Oficial</h1>
+            <p class="subtitle">Productos exclusivos de ICESTUDIO</p>
+            <p>Descubre nuestra colección de productos diseñados con pasión por nuestro equipo</p>
+        </div>
+    </section>
+    
+    <!-- Productos destacados -->
+    <section class="section" id="destacados">
+        <h2 class="section-title">
+            <i class="fas fa-star"></i> Productos Destacados
+        </h2>
+        <div class="featured-products">
+            <div class="product-card featured fade-in">
+                <div class="product-badge">Más vendido</div>
+                <div class="product-image">
+                    <img src="./img/remera.png" alt="Remera ICESTUDIO" onerror="this.src='https://via.placeholder.com/400x300/ff8c00/ffffff?text=Remera+ICESTUDIO'">
+                    <div class="product-overlay">
+                        <button class="btn-view" onclick="openProductModal('producto1')">
+                            <i class="fas fa-eye"></i> Ver detalles
+                        </button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3>Remera Oficial ICESTUDIO</h3>
+                    <p class="product-description">Remera de algodón premium con logo bordado</p>
+                    <div class="product-details">
+                        <span class="product-price">$590</span>
+                        <span class="product-stock"><i class="fas fa-check-circle"></i> Disponible</span>
+                    </div>
+                    <button class="btn-buy" onclick="contactWhatsApp('Remera Oficial ICESTUDIO')">
+                        <i class="fab fa-instagram"></i> Comprar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Catálogo completo -->
+    <section class="section" id="catalogo">
+        <h2 class="section-title">
+            <i class="fas fa-shopping-bag"></i> Catálogo Completo
+        </h2>
+        <div class="filters fade-in">
+            <button class="filter-btn active" onclick="filterProducts('todos')">
+                <i class="fas fa-th"></i> Todos
+            </button>
+            <button class="filter-btn" onclick="filterProducts('ropa')">
+                <i class="fas fa-tshirt"></i> Ropa
+            </button>
+            <button class="filter-btn" onclick="filterProducts('accesorios')">
+                <i class="fas fa-hat-cowboy"></i> Accesorios
+            </button>
+            <button class="filter-btn" onclick="filterProducts('papeleria')">
+                <i class="fas fa-book"></i> Papelería
+            </button>
+        </div>
+        <div class="products-grid">
+            <div class="product-card fade-in" data-category="ropa">
+                <div class="product-image">
+                    <img src="./img/remera.png" alt="Remera ICESTUDIO">
+                    <div class="product-overlay">
+                        <button class="btn-view" onclick="openProductModal('remera')">
+                            <i class="fas fa-eye"></i> Ver detalles
+                        </button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3>Remera Básica</h3>
+                    <p class="product-description">100% Algodón, logo estampado</p>
+                    <div class="product-details">
+                        <span class="product-price">$590</span>
+                        <span class="product-stock"><i class="fas fa-check-circle"></i> Stock</span>
+                    </div>
+                    <button class="btn-buy" onclick="contactWhatsApp('Remera Básica')">
+                        <i class="fab fa-instagram"></i> Comprar
+                    </button>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="ropa">
+                <div class="product-image">
+                    <img src="./img/canguro.png" alt="Buzo ICESTUDIO">
+                    <div class="product-overlay">
+                        <button class="btn-view" onclick="openProductModal('buzo')">
+                            <i class="fas fa-eye"></i> Ver detalles
+                        </button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3>Buzo con Capucha</h3>
+                    <p class="product-description">Polar premium, diseño exclusivo</p>
+                    <div class="product-details">
+                        <span class="product-price">$1.290</span>
+                        <span class="product-stock"><i class="fas fa-check-circle"></i> Stock</span>
+                    </div>
+                    <button class="btn-buy" onclick="contactWhatsApp('Buzo con Capucha')">
+                        <i class="fab fa-instagram"></i> Comprar
+                    </button>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="accesorios">
+                <div class="product-image">
+                    <img src="./img/termo.png" alt="Termo ICESTUDIO">
+                    <div class="product-overlay">
+                        <button class="btn-view" onclick="openProductModal('termo')">
+                            <i class="fas fa-eye"></i> Ver detalles
+                        </button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3>Termo ICESTUDIO</h3>
+                    <p class="product-description">Acero inoxidable, 1 litro</p>
+                    <div class="product-details">
+                        <span class="product-price">$890</span>
+                        <span class="product-stock"><i class="fas fa-check-circle"></i> Stock</span>
+                    </div>
+                    <button class="btn-buy" onclick="contactWhatsApp('Termo ICESTUDIO')">
+                        <i class="fab fa-instagram"></i> Comprar
+                    </button>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="accesorios">
+                <div class="product-image">
+                    <img src="./img/taza.png" alt="Taza ICESTUDIO">
+                    <div class="product-overlay">
+                        <button class="btn-view" onclick="openProductModal('taza')">
+                            <i class="fas fa-eye"></i> Ver detalles
+                        </button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3>Taza ICESTUDIO</h3>
+                    <p class="product-description">Cerámica de 350ml</p>
+                    <div class="product-details">
+                        <span class="product-price">$390</span>
+                        <span class="product-stock"><i class="fas fa-check-circle"></i> Stock</span>
+                    </div>
+                    <button class="btn-buy" onclick="contactWhatsApp('Taza ICESTUDIO')">
+                        <i class="fab fa-instagram"></i> Comprar
+                    </button>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="papeleria">
+                <div class="product-image">
+                    <img src="./img/cuadernoa5.png" alt="Cuaderno ICESTUDIO" onerror="this.src='https://via.placeholder.com/400x300/ff8c00/ffffff?text=Cuaderno+A5'">
+                    <div class="product-overlay">
+                        <button class="btn-view" onclick="openProductModal('cuaderno')">
+                            <i class="fas fa-eye"></i> Ver detalles
+                        </button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3>Cuaderno A5</h3>
+                    <p class="product-description">Tapa dura, 200 páginas</p>
+                    <div class="product-details">
+                        <span class="product-price">$290</span>
+                        <span class="product-stock"><i class="fas fa-check-circle"></i> Stock</span>
+                    </div>
+                    <button class="btn-buy" onclick="contactWhatsApp('Cuaderno A5')">
+                        <i class="fab fa-instagram"></i> Comprar
+                    </button>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="papeleria">
+                <div class="product-image">
+                    <img src="./img/stickers.png" alt="Pack Stickers">
+                    <div class="product-overlay">
+                        <button class="btn-view" onclick="openProductModal('stickers')">
+                            <i class="fas fa-eye"></i> Ver detalles
+                        </button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3>Pack de Stickers</h3>
+                    <p class="product-description">10 stickers impermeables</p>
+                    <div class="product-details">
+                        <span class="product-price">$150</span>
+                        <span class="product-stock"><i class="fas fa-check-circle"></i> Stock</span>
+                    </div>
+                    <button class="btn-buy" onclick="contactWhatsApp('Pack de Stickers')">
+                        <i class="fab fa-instagram"></i> Comprar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contacto -->
+    <section class="section contact-section" id="contacto">
+        <h2 class="consulta">
+            <i class="fas fa-comments"></i> ¿Consultas?
+        </h2>
+        <div class="contact-info-box fade-in">
+            <p>Contáctanos directamente por Instagram para realizar tu pedido o consultar disponibilidad</p>
+            <a href="https://www.instagram.com/icestudiooficial/" target="_blank" class="btn-instagram-main">
+                <i class="fab fa-instagram"></i> Visitar Instagram
+            </a>
+        </div>
+    </section>
+    
+    <!-- Modal de producto -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeProductModal()">&times;</span>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img id="modalProductImage" src="" alt="Producto">
+                </div>
+                <div class="modal-info">
+                    <h2 id="modalProductName"></h2>
+                    <p id="modalProductDescription"></p>
+                    <div class="modal-details">
+                        <p><strong>Precio:</strong> <span id="modalProductPrice"></span></p>
+                        <p><strong>Disponibilidad:</strong> <span class="stock-available">En stock</span></p>
+                    </div>
+                    <div class="modal-features">
+                        <h4>Características:</h4>
+                        <ul id="modalProductFeatures"></ul>
+                    </div>
+                    <button class="btn-buy-modal" onclick="contactFromModal()">
+                        <i class="fab fa-instagram"></i> Comprar ahora
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Pie de página -->
+    <footer>
+        <p>&copy; 2025 ICESTUDIO - Todos los derechos reservados | Merchandising Oficial</p>
+    </footer>
+    
+    <!-- Filtros SVG para modo daltónico -->
+    <svg width="0" height="0" style="position: absolute;">
+        <defs>
+            <!-- Filtro para Protanopia (deficiencia rojo-verde) -->
+            <filter id="protanopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.567, 0.433, 0, 0, 0
+                                                     0.558, 0.442, 0, 0, 0
+                                                     0, 0.242, 0.758, 0, 0
+                                                     0, 0, 0, 1, 0"/>
+            </filter>
+            <!-- Filtro para Deuteranopia (deficiencia verde) -->
+            <filter id="deuteranopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.625, 0.375, 0, 0, 0
+                                                     0.7, 0.3, 0, 0, 0
+                                                     0, 0.3, 0.7, 0, 0
+                                                     0, 0, 0, 1, 0"/>
+            </filter>
+            <!-- Filtro para Tritanopia (deficiencia azul-amarillo) -->
+            <filter id="tritanopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.95, 0.05, 0, 0, 0
+                                                     0, 0.433, 0.567, 0, 0
+                                                     0, 0.475, 0.525, 0, 0
+                                                     0, 0, 0, 1, 0"/>
+            </filter>
+        </defs>
+    </svg>
+    <script src="./js/global-settings.js"></script>
+    <script src="./js/auto-translator.js"></script>
+    <script src="./js/tienda.js"></script>
+</body>
+</html>

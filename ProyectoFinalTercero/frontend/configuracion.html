@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajustes - Draftosaurus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./styles/global-settings.css">
+    <link rel="stylesheet" href="./styles/configuracion.css">
+    <link rel="icon" href="./img/icestudio.png">
+    <link rel="stylesheet" href="./styles/musica.css">
+    <link rel="stylesheet" href="./styles/icebot.css">
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <nav class="navbar-custom">
+        <a class="navbar-brand" href="./menujugador.html">
+            <img src="./img/inicio.png" alt="Draftosaurus">
+        </a>
+        <div class="nav-links">
+            <a class="nav-link" href="./homepage.html"><i class="fas fa-home"></i> IceStudio</a>
+            <a class="nav-link active" href="./configuracion.html"><i class="fas fa-cog"></i> Ajustes</a>
+            <div class="user-dropdown">
+                <button class="user-button" id="nombre-usuario">
+                    <i class="fas fa-user-circle"></i> <span>Usuario</span>
+                </button>
+                <div class="dropdown-menu-custom" id="userDropdown">
+                    <div class="dropdown-item-custom" id="btn-logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Encabezado -->
+    <div class="settings-header">
+        <img src="./img/Logo.png" alt="Draftosaurus" class="logo-header">
+        <h1>Configuración y Ajustes</h1>
+        <p>Personaliza tu experiencia de juego</p>
+    </div>
+    
+    <!-- Contenedor principal -->
+    <div class="container settings-container">
+        <section class="settings-section">
+            <div class="section-icon">
+                <i class="fas fa-palette"></i>
+            </div>
+            <h2>Apariencia</h2>
+            <div class="settings-grid">
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <i class="fas fa-moon"></i>
+                        <div>
+                            <h4>Modo Oscuro</h4>
+                            <p>Activa el tema oscuro para reducir la fatiga visual</p>
+                        </div>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="dark-mode-toggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <i class="fas fa-text-height"></i>
+                        <div>
+                            <h4>Tamaño de Fuente</h4>
+                            <p>Ajusta el tamaño del texto en el juego</p>
+                        </div>
+                    </div>
+                    <select id="font-size" class="setting-select">
+                        <option value="small">Pequeño</option>
+                        <option value="medium" selected>Mediano</option>
+                        <option value="large">Grande</option>
+                        <option value="xlarge">Extra Grande</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <i class="fas fa-magic"></i>
+                        <div>
+                            <h4>Animaciones</h4>
+                            <p>Activa o desactiva las animaciones del juego</p>
+                        </div>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="animations-toggle" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </section>
+        <section class="settings-section">
+            <div class="section-icon">
+                <i class="fas fa-language"></i>
+            </div>
+            <h2>Idioma</h2>
+            <div class="settings-grid">
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <i class="fas fa-globe"></i>
+                        <div>
+                            <h4>Idioma del Juego</h4>
+                            <p>Selecciona tu idioma preferido</p>
+                        </div>
+                    </div>
+                    <select id="language-select" class="setting-select">
+                        <option value="es" selected>Español</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+        <section class="settings-section">
+            <div class="section-icon">
+                <i class="fas fa-universal-access"></i>
+            </div>
+            <h2>Accesibilidad</h2>
+            <div class="settings-grid">
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <i class="fas fa-adjust"></i>
+                        <div>
+                            <h4>Alto Contraste</h4>
+                            <p>Mejora la visibilidad con mayor contraste</p>
+                        </div>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="high-contrast">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <i class="fas fa-eye"></i>
+                        <div>
+                            <h4>Modo Daltónico</h4>
+                            <p>Adapta los colores para diferentes tipos de daltonismo</p>
+                        </div>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="color-blind-toggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <i class="fas fa-palette"></i>
+                        <div>
+                            <h4>Tipo de Daltonismo</h4>
+                            <p>Selecciona el tipo de adaptación de colores</p>
+                        </div>
+                    </div>
+                    <select id="color-blind-type" class="setting-select">
+                        <option value="none">Ninguno</option>
+                        <option value="protanopia">Deficiencia Rojo-Verde (Protanopia)</option>
+                        <option value="deuteranopia">Deficiencia Verde (Deuteranopia)</option>
+                        <option value="tritanopia">Deficiencia Azul-Amarillo (Tritanopia)</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Botones de acción -->
+        <div class="action-buttons">
+            <button class="btn-save" id="btn-save">
+                <i class="fas fa-save"></i> Guardar Cambios
+            </button>
+            <button class="btn-reset" id="btn-reset">
+                <i class="fas fa-undo"></i> Restaurar Valores Predeterminados
+            </button>
+        </div>
+    </div>
+    
+    <!-- Pie de página -->
+    <footer class="game-footer">
+        <div class="footer-content">
+            <div>
+                <p class="footer-text">© 2025 Draftosaurus Digital. Todos los derechos reservados a IceStudio.</p>
+            </div>
+            <div class="social-links">
+                <a href="https://discord.com/invite/j23At8xnv6"><i class="fab fa-discord"></i></a>
+                <a href="https://x.com/icestudio2025"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/icestudiooficial/"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@ICESTUDIO_2025"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Dinosaurio flotante -->
+    <div class="floating-dino">
+        <img src="./img/icestudio.png" alt="logoempresa">
+    </div>
+    
+    <!-- Mensajes de confirmación -->
+    <div id="toast-message" class="toast-message"></div>
+    
+    <!-- Filtros SVG para modo daltónico -->
+    <svg width="0" height="0" style="position: absolute;">
+        <defs>
+            <!-- Filtro para Protanopia (deficiencia rojo-verde) -->
+            <filter id="protanopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.567, 0.433, 0, 0, 0
+                                                     0.558, 0.442, 0, 0, 0
+                                                     0, 0.242, 0.758, 0, 0
+                                                     0, 0, 0, 1, 0"/>
+            </filter>
+            <!-- Filtro para Deuteranopia (deficiencia verde) -->
+            <filter id="deuteranopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.625, 0.375, 0, 0, 0
+                                                     0.7, 0.3, 0, 0, 0
+                                                     0, 0.3, 0.7, 0, 0
+                                                     0, 0, 0, 1, 0"/>
+            </filter>
+            <!-- Filtro para Tritanopia (deficiencia azul-amarillo) -->
+            <filter id="tritanopia-filter" x="0" y="0" width="100%" height="100%">
+                <feColorMatrix type="matrix" values="0.95, 0.05, 0, 0, 0
+                                                     0, 0.433, 0.567, 0, 0
+                                                     0, 0.475, 0.525, 0, 0
+                                                     0, 0, 0, 1, 0"/>
+            </filter>
+        </defs>
+    </svg>
+    <script src="./js/global-settings.js"></script>
+    <script src="./js/auto-translator.js"></script>
+    <script src="./js/configuracion.js"></script>
+    <script src="./js/music-controller.js"></script>
+    <script src="./js/icebot.js"></script>
+    <audio id="musicaFondo" loop style="display: none;">
+        <source src="../musica/soundtrack.mp3" type="audio/mpeg">
+    </audio>
+</body>
+</html>
