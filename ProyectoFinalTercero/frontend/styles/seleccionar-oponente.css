@@ -301,6 +301,30 @@
             border-color: var(--primary-color);
         }
 
+        .opponent-card--local {
+            background: linear-gradient(130deg, rgba(255, 140, 0, 0.15), rgba(255, 193, 7, 0.25));
+            border: 2px dashed rgba(255, 140, 0, 0.6);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .opponent-card--local::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right, rgba(255,255,255,0.35), transparent 55%);
+            pointer-events: none;
+        }
+
+        .opponent-card--local .opponent-name {
+            color: #b35900;
+        }
+
+        .opponent-card--local:hover {
+            border-style: solid;
+            border-color: rgba(255, 140, 0, 0.9);
+        }
+
         .opponent-header {
             display: flex;
             align-items: center;
@@ -321,6 +345,11 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
+        .opponent-avatar--local {
+            background: linear-gradient(140deg, #ffb347, #ff7b00);
+            font-size: 1.6rem;
+        }
+
         .opponent-info {
             flex: 1;
         }
@@ -337,6 +366,10 @@
             color: #666;
         }
 
+        .opponent-status--local {
+            color: #8c4c00;
+        }
+
         .opponent-status i {
             margin-right: 5px;
             color: var(--success);
@@ -345,6 +378,10 @@
         .opponent-actions {
             display: flex;
             gap: 10px;
+        }
+
+        .opponent-actions--local {
+            justify-content: flex-end;
         }
 
         /* Estilos de música en musica.css */
@@ -380,6 +417,22 @@
 
         .btn-opponent i {
             margin-right: 5px;
+        }
+
+        .btn-opponent--local {
+            background: linear-gradient(to bottom, #ffb347, #ff7b00);
+            color: #4a2500;
+            box-shadow: 0 5px 0 rgba(178, 90, 0, 0.6);
+            border: 2px solid rgba(255, 140, 0, 0.4);
+            flex: 0 0 auto;
+        }
+
+        .btn-opponent--local:hover {
+            box-shadow: 0 8px 0 rgba(178, 90, 0, 0.6);
+        }
+
+        .btn-opponent--local:active {
+            box-shadow: 0 3px 0 rgba(178, 90, 0, 0.6);
         }
 
         /* Empty state */

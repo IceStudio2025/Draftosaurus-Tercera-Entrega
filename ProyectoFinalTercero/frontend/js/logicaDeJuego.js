@@ -65,7 +65,8 @@ const ENCLOSURE_CONTAINER_TO_ID = {
 };
 
 function isMultiplayerMode() {
-  return state.totalPlayers === 2 && state.playerSeat !== null && state.playerSeat !== undefined;
+  if (state.isLocalGame) return false;
+  return state.totalPlayers >= 2 && state.playerSeat !== null && state.playerSeat !== undefined;
 }
 
 const state = {
@@ -79,6 +80,8 @@ const state = {
   totalPlayers: 2,
   gameDirection: 'clockwise',
   playerNames: {},
+  isLocalGame: false,
+  currentDraggedColor: null,
   
   currentDice: null,
   diceRolled: false,
@@ -193,6 +196,40 @@ function getInternalName(zoneType) {
   return mapping[zoneType] || zoneType;
 }
 
+function getEnclosureColors(zoneType) {
+  const internal = getInternalName(zoneType);
+  const selector = `[id^="dinos__${internal}"] .dinosaurio__recinto`;
+  return Array.from(document.querySelectorAll(selector))
+    .map((node) => (node.dataset.color || '').toLowerCase())
+    .filter(Boolean);
+}
+
+function getBoardColorCounts() {
+  const counts = {};
+  const dinosaurs = document.querySelectorAll('.dinosaurio__recinto');
+  dinosaurs.forEach((dino) => {
+    const color = (dino.dataset.color || '').toLowerCase();
+    if (!color) return;
+    counts[color] = (counts[color] || 0) + 1;
+  });
+  return counts;
+}
+
+function willColorBeMajority(color) {
+  const counts = getBoardColorCounts();
+  const newCount = (counts[color] || 0) + 1;
+  const otherCounts = Object.entries(counts)
+    .filter(([key]) => key !== color)
+    .map(([, value]) => value);
+  const maxOther = otherCounts.length ? Math.max(...otherCounts) : 0;
+  return newCount > maxOther;
+}
+
+function isSpeciesUniqueOnBoard(color) {
+  const counts = getBoardColorCounts();
+  return (counts[color] || 0) === 0;
+}
+
 // ===========================
 // SISTEMA DE NOTIFICACIONES
 // ===========================
@@ -260,11 +297,24 @@ function playNotificationSound() {
 // SISTEMA DE DADO
 // ===========================
 
+function getRandomPercentage() {
+  try {
+    if (window.crypto && typeof window.crypto.getRandomValues === 'function') {
+      const buffer = new Uint32Array(1);
+      window.crypto.getRandomValues(buffer);
+      return (buffer[0] / 0x100000000) * 100;
+    }
+  } catch (err) {
+    console.warn('[dice] No se pudo usar crypto.getRandomValues:', err);
+  }
+  return Math.random() * 100;
+}
+
 function rollDice() {
   const isMultiplayer = isMultiplayerMode();
   
   if (isMultiplayer) {
-    if (state.playerSeat !== state.activeSeat) {
+    if (!state.isLocalGame && state.playerSeat !== state.activeSeat) {
       const activePlayerName = state.playerNames[state.activeSeat] || `JUGADOR ${state.activeSeat + 1}`;
       console.log("[dice] No es tu turno. En modo multiplayer solo puedes tirar el dado cuando es tu turno.");
       console.log("[dice] playerSeat:", state.playerSeat, "activeSeat:", state.activeSeat);
@@ -292,12 +342,7 @@ function rollDice() {
 
   // RNF57: Probabilidades correctas del dado
   // Mejorar aleatoriedad usando múltiples fuentes
-  const random1 = Math.random();
-  const random2 = Math.random();
-  const random3 = Math.random();
-  // Combinar múltiples números aleatorios para mayor aleatoriedad
-  const combinedRandom = ((random1 + random2 + random3) / 3) * 100;
-  const random = combinedRandom;
+  const random = getRandomPercentage();
   
   let cumulative = 0;
   let selectedFace = null;
@@ -321,12 +366,9 @@ function rollDice() {
   state.currentDice = selectedFace;
   
   console.log('[dice] Resultado aleatorio:', {
-    random1: random1.toFixed(4),
-    random2: random2.toFixed(4),
-    random3: random3.toFixed(4),
-    combinedRandom: combinedRandom.toFixed(4),
+    random: random.toFixed(4),
     selectedFace: selectedFace,
-    timestamp: Date.now()
+    timestamp: Date.now(),
   });
   
   // Mapear cara del dado del frontend al backend
@@ -539,16 +581,19 @@ function isValidPlacement(zone, dinoType) {
     return false;
   }
   
-  // El río siempre es válido si está vacío (RNF48)
-  if (zoneType === 'river') {
-    console.log('[validation] ✅ Río - siempre válido si está vacío (RNF48)');
-    return true;
-  }
+  const normalizedColor = (dinoType || '').toLowerCase();
   
-  // El recinto "island" (solo) siempre es válido si está vacío (similar al río)
-  if (zoneType === 'island') {
-    console.log('[validation] ✅ Isla Solitaria - siempre válido si está vacío');
-    return true;
+  if (zoneType !== 'river') {
+    if (!normalizedColor) {
+      console.log('[validation] ❌ No se proporcionó color para validar reglas del recinto');
+      return false;
+    }
+    
+    const zoneRuleValid = validateEnclosureRule(zoneType, normalizedColor);
+    if (!zoneRuleValid) {
+      console.log('[validation] ❌ Regla específica del recinto no cumplida');
+      return false;
+    }
   }
   
   if (state.diceRolled && state.currentDice && state.diceRolledBySeat !== null) {
@@ -569,6 +614,29 @@ function isValidPlacement(zone, dinoType) {
   
   console.log('[validation] No hay restricción de dado (dado no lanzado)');
   return true;
+}
+
+function validateEnclosureRule(zoneType, color) {
+  switch (zoneType) {
+    case 'forest-same': {
+      const colors = getEnclosureColors(zoneType);
+      if (colors.length === 0) return true;
+      return colors.every((existingColor) => existingColor === color);
+    }
+    case 'prairie-diff': {
+      const colors = getEnclosureColors(zoneType);
+      return !colors.includes(color);
+    }
+    case 'king':
+      return willColorBeMajority(color);
+    case 'island':
+      return isSpeciesUniqueOnBoard(color);
+    case 'love-prairie':
+    case 'trio':
+      return true;
+    default:
+      return true;
+  }
 }
 
 function checkDiceRestriction(zone, dinoType, inner) {
@@ -1161,7 +1229,7 @@ async function checkGameState() {
         state.timer = null;
         
         const playerName = state.playerNames[newActiveSeat] || `JUGADOR ${newActiveSeat + 1}`;
-        const isMyTurn = state.playerSeat === newActiveSeat;
+        const isMyTurn = state.isLocalGame || state.playerSeat === newActiveSeat;
         
         if (isMyTurn) {
           showNotification(`🎮 ES TU TURNO, ${playerName.toUpperCase()}! LANZA EL DADO!`, 'success');
@@ -1238,7 +1306,7 @@ async function renderBag(gameId, playerSeat) {
       img.src = imageForHorizontal(dino.dinosaur_type || "amarillo");
       img.alt = dino.dinosaur_type || "dino";
       img.dataset.dinoId = dinoId;
-      img.dataset.color = dino.dinosaur_type || "amarillo";
+      img.dataset.color = (dino.dinosaur_type || "amarillo").toLowerCase();
       
       img.addEventListener("dragstart", (e) => {
         if (!state.diceRolled) {
@@ -1252,11 +1320,12 @@ async function renderBag(gameId, playerSeat) {
           e.dataTransfer.effectAllowed = "move";
         } catch {}
         const dinoId = String(img.dataset.dinoId);
-        const color = String(img.dataset.color);
+        const color = String(img.dataset.color || '').toLowerCase();
         
         e.dataTransfer.setData("dinoId", dinoId);
         e.dataTransfer.setData("color", color);
         
+        state.currentDraggedColor = color;
         console.log('[dragstart] Arrastrando dinosaurio:', {
           dinoId,
           color,
@@ -1271,6 +1340,7 @@ async function renderBag(gameId, playerSeat) {
 
       img.addEventListener("dragend", () => {
         wrapper.classList.remove("dragging");
+        state.currentDraggedColor = null;
         clearHighlights();
       });
 
@@ -1379,6 +1449,7 @@ async function renderEnclosure(gameId, playerSeat, enclosureId) {
       div.title = `${d.dinosaur_type || ""} #${dinoId}`;
       div.dataset.dinoId = dinoId;
       div.dataset.slotIndex = slotIndex;
+      div.dataset.color = (d.dinosaur_type || '').toLowerCase();
       
       targetCont.appendChild(div);
       
@@ -1408,6 +1479,12 @@ function highlightValidZones(dinoType = null) {
   // Limpiar highlights anteriores
   clearHighlights();
   
+  const color = (dinoType || state.currentDraggedColor || '').toLowerCase();
+  if (!color) {
+    console.log('[highlight] No hay color de dinosaurio seleccionado, no se resaltan zonas');
+    return;
+  }
+  
   const dropZones = Array.from(document.querySelectorAll(".drop-zone"));
   
   dropZones.forEach((zone) => {
@@ -1423,12 +1500,12 @@ function highlightValidZones(dinoType = null) {
     const currentCount = inner.querySelectorAll(".dinosaurio__recinto").length;
     
     // Solo resaltar si está vacío y es válido para el tipo de dinosaurio
-    if (currentCount === 0 && isValidPlacement(zone, dinoType)) {
+    if (currentCount === 0 && isValidPlacement(zone, color)) {
       zone.classList.add("rec--parpadeo");
     }
   });
   
-  console.log('[highlight] Zonas válidas resaltadas para tipo:', dinoType || 'cualquiera');
+  console.log('[highlight] Zonas válidas resaltadas para tipo:', color);
 }
 
 function clearHighlights() {
@@ -1477,6 +1554,9 @@ function attachDropHandlers() {
     const dragenterHandler = (e) => {
       e.preventDefault();
       
+      const draggedColor = state.currentDraggedColor;
+      if (!draggedColor) return;
+      
       const slot = zone.dataset.slot;
       const innerId = `dinos__${getInternalName(zoneType)}${slot !== undefined ? '__' + slot : ''}`;
       const inner = document.getElementById(innerId);
@@ -1485,7 +1565,7 @@ function attachDropHandlers() {
       
       const currentCount = inner.querySelectorAll(".dinosaurio__recinto").length;
 
-      if (currentCount === 0 && isValidPlacement(zone, null)) {
+      if (currentCount === 0 && isValidPlacement(zone, draggedColor)) {
         zone.classList.add("rec--parpadeo");
       }
     };
@@ -1506,7 +1586,7 @@ function attachDropHandlers() {
         return;
       }
       
-      if (state.playerSeat !== state.activeSeat) {
+      if (!state.isLocalGame && state.playerSeat !== state.activeSeat) {
         const activePlayerName = state.playerNames[state.activeSeat] || `JUGADOR ${state.activeSeat + 1}`;
         showNotification(`⏳ No es tu turno. Espera a que ${activePlayerName} coloque su dinosaurio.`, 'warning');
         console.log("[drop] Bloqueado: no es el turno del jugador. Turno de:", activePlayerName);
@@ -1521,6 +1601,7 @@ function attachDropHandlers() {
 
       const dinoId = e.dataTransfer.getData("dinoId");
       const color = e.dataTransfer.getData("color");
+      const normalizedColor = (color || '').toLowerCase();
       
       console.log("[DROP] dinoId:", dinoId, "color:", color, "zone:", zoneType);
       
@@ -1594,7 +1675,7 @@ function attachDropHandlers() {
       });
       console.log('[drop] ========================================');
       
-      const isValid = isValidPlacement(zone, color);
+      const isValid = isValidPlacement(zone, normalizedColor);
       console.log('[drop] isValidPlacement devolvió:', isValid);
       
       if (!isValid) {
@@ -1608,6 +1689,7 @@ function attachDropHandlers() {
       try {
         state.isPlacing = true;
         state.placedThisTurn = true;
+        state.currentDraggedColor = null;
         
         const slotIndex = slot !== undefined ? parseInt(slot, 10) : null;
         
@@ -1654,6 +1736,7 @@ function attachDropHandlers() {
         showNotification("No se pudo colocar el dinosaurio.", "error");
       } finally {
         state.isPlacing = false;
+        state.currentDraggedColor = null;
         hideLoading();
       }
     };
@@ -2064,6 +2147,8 @@ async function checkAndShowGameOver() {
     clearInterval(state.timer);
     state.timer = null;
     stopPolling();
+    localStorage.removeItem('localGameMode');
+    state.isLocalGame = false;
     
     let scores = {};
     let trexCounts = {};
@@ -2319,6 +2404,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   const fromLS = localStorage.getItem("currentGameId");
   const gameId = parseInt(fromQS || fromLS || "0", 10);
   
+  state.isLocalGame = localStorage.getItem('localGameMode') === 'true';
+  if (!state.isLocalGame) {
+    localStorage.removeItem('localGameMode');
+  }
+  console.log('[init] Modo local activo?', state.isLocalGame);
+
   if (!gameId) {
     alert("No se encontró game_id. Volviendo al menú.");
     window.location.href = PAGES.menu;

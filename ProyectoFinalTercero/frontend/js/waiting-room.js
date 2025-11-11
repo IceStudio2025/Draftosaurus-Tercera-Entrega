@@ -12,6 +12,10 @@ class WaitingRoom {
         this.init();
     }
 
+    isValidRoomCode(code) {
+        return typeof code === 'string' && /^[A-Z0-9]{4,10}$/i.test(code.trim());
+    }
+
     async init() {
         await this.setupUserInfo();
         this.detectMode();
@@ -28,10 +32,18 @@ class WaitingRoom {
         
         // Detectar si venimos de unirse a una sala (parámetro en URL o localStorage)
         const urlParams = new URLSearchParams(window.location.search);
-        const joinCode = urlParams.get('join') || urlParams.get('code');
-        const savedRoomCode = localStorage.getItem('joinRoomCode');
+        const joinFlag = urlParams.get('join');
+        const paramRoomCode = urlParams.get('code') || urlParams.get('room_code');
+        const joinCode = this.isValidRoomCode(paramRoomCode) ? paramRoomCode : null;
+        const savedRoomCodeRaw = localStorage.getItem('joinRoomCode');
+        const savedRoomCode = this.isValidRoomCode(savedRoomCodeRaw) ? savedRoomCodeRaw : null;
+        if (savedRoomCodeRaw && !savedRoomCode) {
+            localStorage.removeItem('joinRoomCode');
+        }
         
-        if (isGuest || joinCode || savedRoomCode) {
+        const joinRequested = ['true', '1', 'yes'].includes((joinFlag || '').toLowerCase());
+        
+        if (isGuest || joinRequested || joinCode || savedRoomCode) {
             // Invitados siempre están en modo 'join'
             this.mode = 'join';
             this.roomCode = joinCode || savedRoomCode;
@@ -41,6 +53,8 @@ class WaitingRoom {
                     input.value = this.roomCode.toUpperCase();
                     this.validateRoomCode();
                 }
+            } else if (joinRequested) {
+                this.showStatus('Ingresa el código de la sala para unirte', 'info');
             }
         } else {
             this.mode = 'create';
