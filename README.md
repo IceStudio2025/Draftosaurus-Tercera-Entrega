@@ -35,10 +35,9 @@ Esto permite animaciones, transiciones y una jugabilidad tipo aplicación móvil
 * HTML5
 * CSS3
 * JavaScript
-* Tailwind CSS
 * PHP
 * MySQL
-* VS Code
+* Visual Studio Code
 * Apache / XAMPP
 
 ---
@@ -127,8 +126,7 @@ Con esto cualquier dispositivo dentro de la misma red puede entrar usando la IP 
 En VS Code, abrir `homepage.html`
 Click derecho → **Open with Live Server**
 
-Se abrirá en el navegador la versión jugable del proyecto.
+Se abrirá en el navegador la pagina de inicio, donde podras explorar la información del equipo y su tienda, luego tendrian que tocar "Jugar" donde te registrarias, para luego loguearte 
+y entrar en el menu del jugador, donde podrias explorar distintas secciones del juego.
 
 ---
-
-Si querés lo preparo también como README para GitHub (con formato .md), o con capturas, emojis y tabla de contenido. ¿Querés versión README lista para subir al repo?
