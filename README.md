@@ -1,7 +1,7 @@
 
 ---
 
-## ✅ **Draftosaurus – Proyecto Web presentado por IceStudio (3MA)**
+## ✅ **Draftosaurus – Proyecto Web presentado por IceStudio**
 
 ![Image Alt](https://github.com/IceStudio2025/Draftosaurus-Tercera-Entrega/blob/01c7e0db2deb7ecfa318a6f5b18cc30c6048e105/ProyectoFinalTercero/frontend/img/icestudio.png?raw=true)
 
@@ -56,10 +56,7 @@ git clone https://github.com/IceStudio2025/Draftosaurus-Tercera-Entrega.git
 
 ### ✅ Paso 2 – Abrir el proyecto en Visual Studio Code
 
-```
-cd Draftosaurus-Tercera-Entrega
-code .
-```
+Mover la carpeta hacia el VScode
 
 ---
 
