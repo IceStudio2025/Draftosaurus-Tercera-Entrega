@@ -1,6 +1,6 @@
 <?php
 
-$OPENAI_KEY = '';
+$OPENAI_KEY = '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';
 
 $OPENAI_MODEL = 'meta-llama/llama-4-scout-17b-16e-instruct';
 
