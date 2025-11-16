@@ -2399,9 +2399,19 @@ document.addEventListener("DOMContentLoaded", async () => {
   
   console.log('[auth] Usuario conectado:', username);
   
+  // Leer game_id de los query parameters o localStorage
   const params = new URLSearchParams(window.location.search);
   const fromQS = params.get("game_id");
   const fromLS = localStorage.getItem("currentGameId");
+  
+  console.log('[init] 🔍 Buscando game_id:', {
+    url: window.location.href,
+    search: window.location.search,
+    fromQS: fromQS,
+    fromLS: fromLS,
+    allParams: Object.fromEntries(params)
+  });
+  
   const gameId = parseInt(fromQS || fromLS || "0", 10);
   
   state.isLocalGame = localStorage.getItem('localGameMode') === 'true';
@@ -2410,11 +2420,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
   console.log('[init] Modo local activo?', state.isLocalGame);
 
-  if (!gameId) {
+  if (!gameId || gameId === 0) {
+    console.error('[init] ❌ No se encontró game_id válido. fromQS:', fromQS, 'fromLS:', fromLS);
     alert("No se encontró game_id. Volviendo al menú.");
     window.location.href = PAGES.menu;
     return;
   }
+  
+  console.log('[init] ✅ game_id encontrado:', gameId);
   
   state.gameId = gameId;
 

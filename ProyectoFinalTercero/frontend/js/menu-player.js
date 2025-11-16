@@ -50,7 +50,7 @@ function configurarBotones() {
   if (btnNuevo) {
     btnNuevo.addEventListener("click", (e) => {
       e.preventDefault();
-      window.location.href = PAGES.seleccionarOponente || "partidarapida.html";
+      window.location.href = PAGES.seleccionarOponente || "./partidarapida.html";
     });
   }
 
@@ -67,7 +67,7 @@ function configurarBotones() {
   if (btnHistorial) {
     btnHistorial.addEventListener("click", (e) => {
       e.preventDefault();
-      window.location.href = "historial.html";
+      window.location.href = "./historial.html";
     });
   }
 
@@ -75,12 +75,12 @@ function configurarBotones() {
   if (btnManual) {
     btnManual.addEventListener("click", (e) => {
       e.preventDefault();
-      window.location.href = "manual.html";
+      window.location.href = "./manual.html";
     });
   }
 
   document.getElementById("btn-jugar")?.addEventListener("click", () => {
-    window.location.href = "partidarapida.html";
+    window.location.href = PAGES.seleccionarOponente;
   });
 
 }

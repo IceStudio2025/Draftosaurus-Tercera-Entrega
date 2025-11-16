@@ -8,12 +8,38 @@ const API_URLS = {
 };
 
 export const PAGES = {
-  login: "login.html",
-  register: "registro.html",
-  menu: "menujugador.html",
-  seleccionarOponente: "partidarapida.html",
-  juego: "juego.html",
+  login: "./login.html",
+  register: "./registro.html",
+  menu: "./menujugador.html",
+  seleccionarOponente: "./partidarapida.html",
+  juego: "./juego.html",
 };
+
+/**
+ * Construye una URL de manera consistente para evitar problemas con rutas relativas
+ * Especialmente útil cuando se ejecuta en Docker o diferentes configuraciones de servidor
+ * @param {string} page - Nombre de la página (ej: "juego.html")
+ * @param {Object} params - Parámetros de query string (ej: {game_id: 123})
+ * @returns {string} URL completa con parámetros
+ */
+export function buildPageUrl(page, params = {}) {
+  // Asegurar que la página tenga el prefijo ./
+  let pagePath = page;
+  if (!pagePath.startsWith('./') && !pagePath.startsWith('/') && !pagePath.startsWith('http')) {
+    pagePath = './' + pagePath;
+  }
+  
+  // Construir query string
+  const queryParams = new URLSearchParams();
+  Object.keys(params).forEach(key => {
+    if (params[key] !== null && params[key] !== undefined) {
+      queryParams.append(key, params[key]);
+    }
+  });
+  
+  const queryString = queryParams.toString();
+  return queryString ? `${pagePath}?${queryString}` : pagePath;
+}
 
 async function iniciarSesion(identifier, password) {
   try {
@@ -151,4 +177,5 @@ export {
   iniciarSesionInvitado,
   cerrarSesion,
   API_URLS,
+  buildPageUrl,
 };
