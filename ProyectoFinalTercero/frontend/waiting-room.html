@@ -252,7 +252,21 @@
             </div>
         </div>
     </footer>
-    <!-- El dropdown se configura desde waiting-room.js después de cargar el usuario -->
+    <script>
+        const userButton = document.getElementById('nombre-usuario');
+        const dropdown = document.getElementById('userDropdown');
+        if (userButton && dropdown) {
+            userButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                dropdown.classList.toggle('active');
+            });
+            document.addEventListener('click', function(e) {
+                if (!userButton.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.remove('active');
+                }
+            });
+        }
+    </script>
     <script src="./js/api-config.js" type="module"></script>
     <script src="./js/global-settings.js"></script>
     <script src="./js/auto-translator.js"></script>

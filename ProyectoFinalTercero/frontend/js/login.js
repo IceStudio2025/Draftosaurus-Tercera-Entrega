@@ -20,7 +20,7 @@ const showPassword = (input, showPass) => {
   });
 };
 
-import { iniciarSesion, iniciarSesionInvitado, PAGES } from "./auth.js";
+import { iniciarSesion, iniciarSesionInvitado } from "./auth.js";
 
 window.addEventListener("load", () => {
   const input = document.getElementById("password");
@@ -59,7 +59,7 @@ window.addEventListener("load", () => {
 
       showMessage(elementInput, true, "Login exitoso! Redirigiendo...");
       setTimeout(() => {
-        window.location.href = PAGES.menu;
+        window.location.href = "menujugador.html";
       }, 1000);
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
@@ -97,7 +97,7 @@ window.addEventListener("load", () => {
 
         showMessage(elementInput, true, "¡Bienvenido como invitado! Redirigiendo...");
         setTimeout(() => {
-          window.location.href = PAGES.menu;
+          window.location.href = "menujugador.html";
         }, 1000);
       } catch (error) {
         console.error("Error al iniciar sesión como invitado:", error);

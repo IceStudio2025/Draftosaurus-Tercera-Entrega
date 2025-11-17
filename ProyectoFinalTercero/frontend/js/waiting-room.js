@@ -1,4 +1,4 @@
-import { obtenerIdUsuario, obtenerNombreUsuario, cerrarSesion, esInvitado, PAGES, buildPageUrl } from './auth.js';
+import { obtenerIdUsuario, obtenerNombreUsuario, cerrarSesion, esInvitado, PAGES } from './auth.js';
 import ApiConfig from './api-config.js';
 
 // Usar el sistema de configuración de API
@@ -9,7 +9,7 @@ class WaitingRoom {
         this.roomCode = null;
         this.isAdmin = false;
         this.mode = 'create'; // 'create' o 'join'
-        // init() se llamará desde DOMContentLoaded porque es async
+        this.init();
     }
 
     isValidRoomCode(code) {
@@ -112,18 +112,11 @@ class WaitingRoom {
     }
 
     async setupUserInfo() {
-        console.log('[auth] 🔍 Iniciando setupUserInfo...');
-        console.log('[auth] localStorage userId:', localStorage.getItem('userId'));
-        console.log('[auth] localStorage username:', localStorage.getItem('username'));
-        
         let userId = obtenerIdUsuario();
         let username = obtenerNombreUsuario();
 
-        console.log('[auth] Después de obtener funciones:', { userId, username });
-
         // CRÍTICO: Si es invitado y no tiene user_id válido, crear uno en el backend
         if (esInvitado() && !userId) {
-            console.log('[auth] Es invitado sin userId, creando usuario invitado...');
             try {
                 const { iniciarSesionInvitado } = await import('./auth.js');
                 const result = await iniciarSesionInvitado();
@@ -139,7 +132,6 @@ class WaitingRoom {
                 
                 userId = result.user.id;
                 username = result.user.username;
-                console.log('[auth] ✅ Usuario invitado creado:', { userId, username });
             } catch (error) {
                 console.error('[auth] Error al crear usuario invitado:', error);
                 this.showStatus('Error al crear usuario invitado', 'error');
@@ -151,93 +143,22 @@ class WaitingRoom {
         }
 
         if (!userId || !username) {
-            console.error('[auth] ❌ No hay usuario logueado:', { userId, username });
-            console.error('[auth] localStorage completo:', {
-                userId: localStorage.getItem('userId'),
-                username: localStorage.getItem('username'),
-                isGuest: localStorage.getItem('isGuest')
-            });
             console.warn('[auth] No hay usuario logueado, redirigiendo...');
-            this.showStatus('Debes iniciar sesión para continuar', 'error');
-            setTimeout(() => {
-                window.location.href = PAGES.login;
-            }, 2000);
+            window.location.href = PAGES.login;
             return;
         }
 
-        // Intentar actualizar el nombre de usuario en el DOM
-        // Intentar múltiples veces porque el DOM puede no estar listo
-        let attempts = 0;
-        const maxAttempts = 20; // Aumentado a 20 intentos (2 segundos)
-        const updateUsername = () => {
-            attempts++;
-            const userButton = document.getElementById('nombre-usuario');
-            if (userButton) {
-                const span = userButton.querySelector('span');
-                if (span) {
-                    span.textContent = username;
-                    console.log('[auth] ✅ Usuario actualizado en span:', username);
-                } else {
-                    userButton.innerHTML = `<i class="fas fa-user-circle"></i> <span>${username}</span>`;
-                    console.log('[auth] ✅ Usuario actualizado en HTML:', username);
-                }
-                // Configurar el dropdown después de actualizar el nombre
-                this.setupUserDropdown();
-                return true;
-            } else if (attempts < maxAttempts) {
-                console.log(`[auth] ⏳ Intento ${attempts}/${maxAttempts}: elemento nombre-usuario no encontrado, reintentando...`);
-                setTimeout(updateUsername, 100);
-                return false;
-            } else {
-                console.error('[auth] ❌ No se pudo encontrar el elemento nombre-usuario después de', maxAttempts, 'intentos');
-                console.error('[auth] Elementos disponibles en el DOM:', {
-                    userButton: document.getElementById('nombre-usuario'),
-                    userDropdown: document.getElementById('userDropdown'),
-                    allButtons: document.querySelectorAll('button[id*="usuario"]')
-                });
-                return false;
-            }
-        };
-        
-        updateUsername();
-
-        console.log('[auth] ✅ Usuario conectado:', username, '| ID:', userId);
-    }
-
-    setupUserDropdown() {
         const userButton = document.getElementById('nombre-usuario');
-        const dropdown = document.getElementById('userDropdown');
-        const btnLogout = document.getElementById('btn-logout');
-        
-        if (!userButton || !dropdown) {
-            console.warn('[auth] ⚠️ Elementos del dropdown no encontrados');
-            return;
-        }
-
-        // Configurar click en el botón de usuario
-        userButton.addEventListener('click', function(e) {
-            e.stopPropagation();
-            dropdown.classList.toggle('active');
-        });
-
-        // Cerrar dropdown al hacer click fuera
-        document.addEventListener('click', function(e) {
-            if (!userButton.contains(e.target) && !dropdown.contains(e.target)) {
-                dropdown.classList.remove('active');
+        if (userButton) {
+            const span = userButton.querySelector('span');
+            if (span) {
+                span.textContent = username;
+            } else {
+                userButton.innerHTML = `<i class="fas fa-user-circle"></i> <span>${username}</span>`;
             }
-        });
-
-        // Configurar logout
-        if (btnLogout) {
-            btnLogout.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (confirm('¿Deseas cerrar sesión?')) {
-                    cerrarSesion();
-                }
-            });
         }
 
-        console.log('[auth] ✅ Dropdown configurado correctamente');
+        console.log('[auth] Usuario conectado:', username);
     }
 
     generateRandomRoomCode() {
@@ -311,7 +232,15 @@ class WaitingRoom {
             copyCodeBtn.addEventListener('click', () => this.copyRoomCode());
         }
 
-        // El logout se configura en setupUserDropdown() para evitar duplicados
+        // Botón de logout
+        const logoutBtn = document.getElementById('btn-logout');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                if (confirm('¿Deseas cerrar sesión?')) {
+                    cerrarSesion();
+                }
+            });
+        }
     }
 
     validateRoomCode() {
@@ -719,7 +648,7 @@ class WaitingRoom {
             }
 
             setTimeout(() => {
-                const juegoUrl = buildPageUrl(PAGES.juego, { game_id: gameId });
+                const juegoUrl = `juego.html?game_id=${gameId}`;
                 console.log('[room] 🔗 Redirigiendo desde startGame a:', juegoUrl);
                 window.location.href = juegoUrl;
             }, 1000);
@@ -741,7 +670,7 @@ class WaitingRoom {
 
     goBack() {
         this.cleanupPreviousGame();
-        window.location.href = PAGES.menu;
+        window.location.href = PAGES.menu || 'menujugador.html';
     }
 
     showStatus(message, type = 'info') {
@@ -897,7 +826,7 @@ class WaitingRoom {
                     
                     // Forzar redirección después de un pequeño delay
                     setTimeout(() => {
-                        const juegoUrl = buildPageUrl(PAGES.juego, { game_id: gameIdToRedirect });
+                        const juegoUrl = `juego.html?game_id=${gameIdToRedirect}`;
                         console.log('[room] 🔗🔗🔗 REDIRIGIENDO A:', juegoUrl);
                         console.log('[room] 📦 localStorage final:', {
                             currentGameId: localStorage.getItem('currentGameId'),
@@ -1014,9 +943,9 @@ class WaitingRoom {
         this.showStatus('¡La partida ha comenzado! Redirigiendo...', 'success');
         
         // Redirigir después de un pequeño delay
-        // Usar la función buildPageUrl para construir la URL de manera consistente
+        // Usar la ruta relativa directamente para evitar problemas
         setTimeout(() => {
-            const juegoUrl = buildPageUrl(PAGES.juego, { game_id: gameId });
+            const juegoUrl = `juego.html?game_id=${gameId}`;
             console.log('[room] 🔗 Redirigiendo a:', juegoUrl);
             console.log('[room] 📦 localStorage final antes de redirigir:', {
                 currentGameId: localStorage.getItem('currentGameId'),
@@ -1074,7 +1003,7 @@ class WaitingRoom {
                 clearInterval(this.pollingInterval);
             }
             this.cleanupPreviousGame();
-            window.location.href = PAGES.menu;
+            window.location.href = PAGES.menu || 'menujugador.html';
         }
     }
 
@@ -1239,8 +1168,8 @@ class WaitingRoom {
 
 document.addEventListener('DOMContentLoaded', async () => {
     const waitingRoom = new WaitingRoom();
-    // Llamar init() aquí porque es async y necesitamos esperar a que el DOM esté listo
-    await waitingRoom.init();
+    // init() se llama automáticamente en el constructor, pero ahora es async
+    // No necesitamos hacer nada adicional aquí ya que init() se llama en el constructor
     
     // Timeout handler para loading overlay
     let loadingStartTime = null;

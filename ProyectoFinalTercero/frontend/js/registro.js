@@ -1,7 +1,5 @@
 "use strict";
 
-import { PAGES } from "./auth.js";
-
 // Función para obtener la URL base de la API
 const getApiBase = () => window.getApiBase ? window.getApiBase() : "http://localhost:8000";
 const REGISTER_API = () => `${getApiBase()}/api/auth/register`;
@@ -67,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
         mostrarMensaje("¡Registro exitoso! Redirigiendo al login...", "green");
 
         setTimeout(() => {
-          window.location.href = PAGES.login;
+          window.location.href = "login.html";
         }, 2000);
       } else {
         console.log("Error del servidor:", data.message);

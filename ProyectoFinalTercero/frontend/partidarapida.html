@@ -63,7 +63,46 @@
         </div>
     </footer>
     
-    <!-- El dropdown se configura desde seleccionar-oponente.js después de cargar el usuario -->
+    <script>
+        const userButton = document.getElementById('nombre-usuario');
+        const dropdown = document.getElementById('userDropdown');
+        userButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            dropdown.classList.toggle('active');
+        });
+        document.addEventListener('click', function(e) {
+            if (!userButton.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+        function addOpponent(name, isOnline = true) {
+            const grid = document.getElementById('opponents');
+            const card = document.createElement('div');
+            card.className = 'opponent-card';
+            const initial = name.charAt(0).toUpperCase();
+            card.innerHTML = `
+                <div class="opponent-header">
+                    <div class="opponent-avatar">${initial}</div>
+                    <div class="opponent-info">
+                        <div class="opponent-name">${name}</div>
+                        <div class="opponent-status">
+                            <i class="fas fa-circle"></i> En línea
+                        </div>
+                    </div>
+                </div>
+                <div class="opponent-actions">
+                    <button class="btn-opponent btn-primary">
+                        <i class="fas fa-gamepad"></i> Jugar
+                    </button>
+                    <button class="btn-opponent btn-secondary">
+                        <i class="fas fa-user"></i> Perfil
+                    </button>
+                </div>
+            `;
+            grid.appendChild(card);
+            document.getElementById('empty').style.display = 'none';
+        }
+    </script>
     
     <script src="./js/api-config.js" type="module"></script>
     <script src="./js/global-settings.js"></script>

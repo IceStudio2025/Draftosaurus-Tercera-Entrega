@@ -1,6 +1,6 @@
 "use strict";
 
-import { obtenerIdUsuario, obtenerNombreUsuario, PAGES, buildPageUrl } from "./auth.js";
+import { obtenerIdUsuario, obtenerNombreUsuario, PAGES } from "./auth.js";
 
 import ApiConfig from "./api-config.js";
 // Usar el sistema de configuración de API
@@ -99,57 +99,22 @@ function renderOpponents(opponents) {
 
 async function loadOpponents() {
   try {
-    console.log('[opponents] 🔍 Iniciando loadOpponents...');
-    console.log('[opponents] localStorage userId:', localStorage.getItem('userId'));
-    console.log('[opponents] localStorage username:', localStorage.getItem('username'));
-    
     const myId = obtenerIdUsuario();
-    console.log('[opponents] myId obtenido:', myId);
-    
     if (!myId) {
-      console.error('[opponents] ❌ No hay userId, redirigiendo a login');
       setStatus("No hay sesión. Redirigiendo...", "error");
       setTimeout(() => (window.location.href = PAGES.login), 800);
       return;
     }
-    
-    // Actualizar nombre de usuario en el DOM
-    const username = obtenerNombreUsuario() || `Usuario #${myId}`;
-    console.log('[opponents] Username obtenido:', username);
-    
-    let attempts = 0;
-    const maxAttempts = 20; // Aumentado a 20 intentos (2 segundos)
-    const updateUsername = () => {
-      attempts++;
-      const nameEl = document.getElementById("nombre-usuario");
-      if (nameEl) {
-        let span = nameEl.querySelector('span');
-        if (!span) {
-          nameEl.innerHTML = `<i class="fas fa-user-circle"></i> <span>${username}</span>`;
-          console.log('[opponents] ✅ Usuario actualizado en HTML:', username);
-        } else {
-          span.textContent = username;
-          console.log('[opponents] ✅ Usuario actualizado en span:', username);
-        }
-        // Configurar dropdown después de actualizar el nombre
-        setupUserDropdown();
-        return true;
-      } else if (attempts < maxAttempts) {
-        console.log(`[opponents] ⏳ Intento ${attempts}/${maxAttempts}: elemento nombre-usuario no encontrado, reintentando...`);
-        setTimeout(updateUsername, 100);
-        return false;
+    const nameEl = document.getElementById("nombre-usuario");
+    if (nameEl) {
+      const username = obtenerNombreUsuario() || `Usuario #${myId}`;
+      let span = nameEl.querySelector('span');
+      if (!span) {
+        nameEl.innerHTML = `<i class="fas fa-user-circle"></i> <span>${username}</span>`;
       } else {
-        console.error('[opponents] ❌ No se pudo encontrar el elemento nombre-usuario después de', maxAttempts, 'intentos');
-        console.error('[opponents] Elementos disponibles:', {
-          nombreUsuario: document.getElementById('nombre-usuario'),
-          userDropdown: document.getElementById('userDropdown'),
-          allButtons: document.querySelectorAll('button[id*="usuario"]')
-        });
-        return false;
+        span.textContent = username;
       }
-    };
-    
-    updateUsername();
+    }
 
     setStatus("Cargando oponentes...", "info");
     const data = await fetchJSON(`${getApiBase()}/api/user/opponents/${myId}`);
@@ -195,7 +160,7 @@ async function onStartGame(opponent) {
       return;
     }
     localStorage.setItem("currentGameId", String(res.game_id));
-    window.location.href = buildPageUrl(PAGES.juego, { game_id: res.game_id });
+    window.location.href = `juego.html?game_id=${res.game_id}`;
   } catch (e) {
     console.error("[start] Error: ", e);
     setStatus("Error al crear la partida.", "error");
@@ -271,49 +236,12 @@ async function startLocalQuickGame() {
 
     setStatus("Partida local creada. Redirigiendo...", "success");
     setTimeout(() => {
-      window.location.href = buildPageUrl(PAGES.juego, { game_id: res.game_id, mode: 'local' });
+      window.location.href = `juego.html?game_id=${res.game_id}&mode=local`;
     }, 300);
   } catch (error) {
     console.error("[local] Error al iniciar partida local:", error);
     setStatus("Error al iniciar partida local.", "error");
   }
-}
-
-function setupUserDropdown() {
-  const userButton = document.getElementById('nombre-usuario');
-  const dropdown = document.getElementById('userDropdown');
-  const btnLogout = document.getElementById('btn-logout');
-  
-  if (!userButton || !dropdown) {
-    console.warn('[opponents] ⚠️ Elementos del dropdown no encontrados');
-    return;
-  }
-
-  // Configurar click en el botón de usuario
-  userButton.addEventListener('click', function(e) {
-    e.stopPropagation();
-    dropdown.classList.toggle('active');
-  });
-
-  // Cerrar dropdown al hacer click fuera
-  document.addEventListener('click', function(e) {
-    if (!userButton.contains(e.target) && !dropdown.contains(e.target)) {
-      dropdown.classList.remove('active');
-    }
-  });
-
-  // Configurar logout
-  if (btnLogout) {
-    btnLogout.addEventListener('click', async (e) => {
-      e.preventDefault();
-      if (confirm('¿Deseas cerrar sesión?')) {
-        const { cerrarSesion } = await import('./auth.js');
-        cerrarSesion();
-      }
-    });
-  }
-
-  console.log('[opponents] ✅ Dropdown configurado correctamente');
 }
 
 document.addEventListener("DOMContentLoaded", () => {

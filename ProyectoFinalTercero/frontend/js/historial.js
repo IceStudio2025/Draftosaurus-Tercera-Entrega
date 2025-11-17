@@ -10,7 +10,7 @@ function showNotification(message, type = 'info') {
         console.log(message);
     }
 }
-import { obtenerIdUsuario, obtenerNombreUsuario, cerrarSesion, PAGES, buildPageUrl } from './auth.js';
+import { obtenerIdUsuario, obtenerNombreUsuario, cerrarSesion, PAGES } from './auth.js';
 
 class HistorialManager {
     constructor() {
@@ -605,7 +605,7 @@ class HistorialManager {
             const message = this.translateText(`Iniciando partida similar a la #${gameId}...`);
             showNotification(message, 'success');
             setTimeout(() => {
-                window.location.href = './waiting-room.html';
+                window.location.href = 'waiting-room.html';
             }, 1500);
         }
     }
@@ -619,7 +619,7 @@ class HistorialManager {
             localStorage.setItem('currentGameId', gameId);
             // Redirigir al juego
             setTimeout(() => {
-                window.location.href = buildPageUrl(PAGES.juego, { game_id: gameId });
+                window.location.href = `juego.html?game_id=${gameId}`;
             }, 1000);
         }
     }

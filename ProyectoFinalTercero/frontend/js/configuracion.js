@@ -1,5 +1,3 @@
-import { obtenerNombreUsuario, cerrarSesion, PAGES } from './auth.js';
-
 let settings = window.GameSettings.get();
 
 const darkModeToggle = document.getElementById('dark-mode-toggle');
@@ -33,7 +31,7 @@ function initializeSettings() {
         colorBlindTypeSelect.disabled = !settings.colorBlindMode;
     }
     
-    const username = obtenerNombreUsuario() || 'Usuario';
+    const username = localStorage.getItem('username') || 'Usuario';
     if (userButton) {
         let span = userButton.querySelector('span');
         if (!span) {
@@ -129,7 +127,8 @@ if (colorBlindTypeSelect) {
 
 btnLogout.addEventListener('click', function() {
     if (confirm(window.t('logoutConfirm'))) {
-        cerrarSesion();
+        localStorage.removeItem('username');
+        window.location.href = './login.html';
     }
 });
 
